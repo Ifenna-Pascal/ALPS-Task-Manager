@@ -14,3 +14,16 @@ a {
 * {
   box-sizing: border-box;
 }
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .flex_1 {
+    flex: 1;
+  }
+  .flex_3 {
+    flex: 3;
+  }
+}
