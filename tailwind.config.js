@@ -6,6 +6,11 @@ module.exports = {
   ],
 
   theme: {
+    fontFamily: {
+      Roboto: ["Roboto", "sans-serif"],
+      Poppins: ["Poppins", "sans-serif"],
+      DW: ["Druk Wide Cy Web Bold", "sans-serif"],
+    },
     extend: {},
   },
   plugins: [],

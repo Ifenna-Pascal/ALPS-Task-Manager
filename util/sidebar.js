@@ -5,24 +5,14 @@ const sideBarIcon = [
     pathname:"/"
   },
   {
-    name: "Pending Tasks",
+    name: " My Tasks",
     icon: "ri-calendar-todo-line",
-    pathname:"/pending"
+    pathname:"/mytasks"
   },
   {
-    name: "Dashboard",
+    name: "Log",
     icon: "ri-dashboard-line",
-    pathname:"/complete"
-  },
-  {
-    name: "Pending Tasks",
-    icon: "ri-calendar-todo-line",
-    pathname:"/jer"
-  },
-  {
-    name: "Current Tasks",
-    icon: "ri-global-line",
-    pathname:"/kk"
+    pathname:"/logs"
   },
   {
     name: "Settings",
