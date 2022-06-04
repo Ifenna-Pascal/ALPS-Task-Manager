@@ -1,10 +1,9 @@
 import React from "react";
-import TaskHeading from "../tasks/TaskHeading";
 
 function User() {
   return (
-    <div className="w-full h-full  bg-white  relative ">
-      <div className="w-full h-[35%] image bg-cover bg-center"></div>
+    <div className="w-full h-full  relative ">
+      <div className="w-full h-[35%] image rounded-t-xl bg-cover bg-center"></div>
       <div className="w-[100px]  h-[100px] rounded-full flex item-center absolute top-[17.5%] left-[calc(50%-50px)]">
         <img
           className="object-cover object-center  rounded-full h-full w-full"

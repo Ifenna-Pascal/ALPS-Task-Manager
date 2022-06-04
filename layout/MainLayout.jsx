@@ -10,7 +10,7 @@ function MainLayout({ children }) {
       <div className="w-full h-full  md:ml-[250px]">
         <Navbar />
         <div
-          className="p-4 lg:hidden flex items-center z-50 fixed bottom-[10%] right-[2%] bg-blue-600 rounded-full"
+          className="p-4 md:hidden flex items-center z-50 fixed bottom-[10%] right-[2%] bg-blue-600 rounded-full"
           onClick={() => setShow(!show)}
         >
           <i

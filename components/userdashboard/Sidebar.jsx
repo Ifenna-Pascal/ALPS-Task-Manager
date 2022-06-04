@@ -18,7 +18,7 @@ function Sidebar({ show, closeSidebar }) {
               key={i}
               path={x.pathname}
               classes={
-                router.pathname === x.pathname
+                router.pathname === x.pathname 
                   ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
                   : ""
               }
