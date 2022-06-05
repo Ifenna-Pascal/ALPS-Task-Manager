@@ -12,7 +12,7 @@ function Dashboard() {
         <div className='lg:col-span-3 h-[300px]  col-span-1 lg:row-span-2'>
             <User />
         </div>
-        <div className='lg:col-start-4   lg:row-span-3 lg:col-span-4 '>
+        <div className='lg:col-start-4 -mt-12  md:-mt-0 lg:row-span-3 lg:col-span-4 '>
             <CurrentTask type="current" duration="12 days" deadline="May 30th" header="Build An Authentication Page" content=" Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis ad debitis ipsa quod quos impedit doloremque, in fugit illo reiciendis et beatae dolores sunt dolorum excepturi nihil magnam distinctio officia." />
         </div>
         <div className='lg:row-start-3 lg:col-span-3 lg:row-span-3 w-full'>
