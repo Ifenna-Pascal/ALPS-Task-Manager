@@ -1,12 +1,18 @@
-import MainLayout from '../layout/MainLayout'
-import '../styles/globals.css'
+import MainLayout from "../layout/MainLayout";
+import "../styles/globals.css";
+import { wrapper } from "../store/store";
+import dynamic from "next/dynamic";
+const ProgressBar = dynamic(() => import("../components/ProgressBar"), {
+  ssr: false,
+});
 
 function MyApp({ Component, pageProps }) {
   return (
     <MainLayout>
-       <Component {...pageProps} />
+      <ProgressBar />
+      <Component {...pageProps} />
     </MainLayout>
-  )
+  );
 }
 
-export default MyApp
+export default wrapper.withRedux(MyApp);

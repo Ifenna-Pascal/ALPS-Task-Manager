@@ -23,7 +23,7 @@ function Taskcard({ header, content, deadline, duration, id }) {
             <i className="ri-calendar-todo-line"></i>
           </div>
           <div className="">
-            <span className="text-gray-400  text-sm">{deadline}</span>
+            <span className="text-gray-400  text-[12px]">{deadline}</span>
           </div>
         </div>
         <div className="flex items-center">
@@ -31,7 +31,7 @@ function Taskcard({ header, content, deadline, duration, id }) {
             <i className="ri-timer-line"></i>
           </div>
           <div className="">
-            <span className="text-gray-400  text-sm">{duration}</span>
+            <span className="text-gray-400  text-[12px]">{duration}</span>
           </div>
         </div>
       </div>

@@ -23,9 +23,9 @@ function CurrentTask({ header, content, deadline, type, duration }) {
           </div>
           <div className="flex items-center">
             <span className="text-gray-600 font-semibold text-lg mr-1 block text-[1rem]">
-              Deadline{" "}
+              Start Date
             </span>
-            <span className="text-gray-600  text-lg"> - {` ${deadline}`}</span>
+            <span className="text-gray-600  text-lg"> :- {` ${deadline}`}</span>
           </div>
         </div>
         <div className="flex items-center">
@@ -34,9 +34,9 @@ function CurrentTask({ header, content, deadline, type, duration }) {
           </div>
           <div className="flex items-center">
             <span className="text-gray-600 font-semibold text-lg mr-1 block text-[1rem]">
-              Duration{" "}
+              End Date
             </span>
-            <span className="text-gray-600  text-lg">- {duration}</span>
+            <span className="text-gray-600  text-lg">:- {duration}</span>
           </div>
         </div>
       </div>
