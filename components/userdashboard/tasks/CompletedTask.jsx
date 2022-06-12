@@ -1,21 +1,21 @@
 import Taskcard from "./Taskcard";
 import TaskHeading from "./TaskHeading";
 import { useSelector } from "react-redux";
+import EmptyState from "../../EmptyState";
 
 function CompletedTask() {
   const {
-    completedTask
+    completedTask: { total, tasks }
   } = useSelector((state) => state.users);
-  console.log(completedTask)
   return (
     <div className="mb-4">
       <TaskHeading
         color="bg-blue-400"
         text="Completed"
-        // total={total && total}
+        total={total && total}
       />
       <div className="max-h-screen overflow-scroll contains mb-4">
-        {/* {tasks && tasks.length > 0 ? (
+        {tasks && tasks.length > 0 ? (
           tasks.map((x, i) => (
             <Taskcard
               key={i}
@@ -31,8 +31,8 @@ function CompletedTask() {
             />
           ))
         ) : (
-          <li>No data found</li>
-        )} */}
+           <EmptyState msg="No Task Completed" />
+        )}
       </div>
     </div>
   );

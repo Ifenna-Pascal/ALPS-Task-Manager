@@ -1,6 +1,7 @@
 import Taskcard from "./Taskcard";
 import TaskHeading from "./TaskHeading";
 import { useSelector } from "react-redux";
+import EmptyState from "../../EmptyState";
 
 function InProgress() {
   const {
@@ -15,8 +16,7 @@ function InProgress() {
         total={total && total}
       />
       <div className="md:max-h-screen overflow-scroll contains mb-4">
-        {tasks &&
-          tasks.length > 0 &&
+      {tasks && tasks.length > 0 ? (
           tasks.map((x, i) => (
             <Taskcard
               key={i}
@@ -30,7 +30,10 @@ function InProgress() {
               deadline={x.startDate}
               duration={x.endDate}
             />
-          ))}
+          ))
+        ) : (
+           <EmptyState msg="No Task In Progress" />
+        )}
       </div>
     </div>
   );

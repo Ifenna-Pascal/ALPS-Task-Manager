@@ -1,54 +1,51 @@
 import React from "react";
 import CurrentTask from "../../components/userdashboard/home/CurrentTask";
 import Taskcard from "../../components/userdashboard/tasks/Taskcard";
-import { getAll, getFunctionById } from "../../util/projects";
-import {useRouter} from 'next/router';
-function OneProject(props) {
+import EmptyState from '../../components/EmptyState';
+import { useRouter } from "next/router";
+import {
+  allTasks,
+  filteredTasks,
+  oneUserTask,
+} from "../../store/apicall/userCalls";
+function OneProject({ project, tasks }) {
   const router = useRouter();
   return (
     <div className="flex lg:h-[calc(100vh-7rem)]  flex-col">
-      <div className="flex px-6 items-center my-8" onClick={()=> router.back()}>
+      <div
+        className="flex px-6 items-center my-8"
+        onClick={() => router.push("/mytasks")}
+      >
         <div className="text-xl text-[#E74141]"></div>
-        <i className="ri-arrow-left-line mr-1"></i>  
+        <i className="ri-arrow-left-line mr-1"></i>
         <span className="text-gray-700 font-Poppins font-[400] text-[20px] leading-[24px]">
           Back
         </span>
       </div>
       <CurrentTask
-        header={props.name}
-        type={props.type}
-        content={props.content}
-        deadline={props.deadline}
-        duration={props.duration}
+        header={project.taskName}
+        type={project.taskProgress}
+        content={project.taskDescription}
+        deadline={project.startDate}
+        duration={project.endDate}
       />
       <div className="flex px-6 items-center">
         <span className={`p-[0.35rem] bg-blue-400  mr-2 rounded-full`}></span>
         <span className="my-8 font-Roboto capitalize  text-gray-700 text-2xl font-semibold">
-          Related {props.type} Task
+          Related {project.type} Task
         </span>
       </div>
-      <div className="flex flex-col md:flex-row px-6 md:space-x-6 items-center">
-        <Taskcard
-          id={props.id}
-          header={props.name}
-          content={props.content}
-          deadline={props.deadline}
-          duration={props.duration}
-        />
-        <Taskcard
-          id={props.id}
-          header={props.name}
-          content={props.content}
-          deadline={props.deadline}
-          duration={props.duration}
-        />
-        <Taskcard
-          id={props.id}
-          header={props.name}
-          content={props.content}
-          deadline={props.deadline}
-          duration={props.duration}
-        />
+      <div className="flex flex-col w-full md:flex-row px-6 md:space-x-6 items-center">
+        {tasks && tasks.length > 0 ? tasks.map((x, i) => (
+          <Taskcard
+            key={i}
+            id={x._id}
+            header={x.taskName}
+            content={project.taskDescription}
+            deadline={project.startDate}
+            duration={project.endDate}
+          />
+        )) : <EmptyState msg="No Related Task Found" /> }
       </div>
     </div>
   );
@@ -57,14 +54,15 @@ function OneProject(props) {
 export default OneProject;
 
 export async function getStaticPaths() {
-  const projects = await getAll();
+  const projects = await allTasks();
   const paths = projects.map((x) => ({
-    params: { id: x.id.toString() },
+    params: { id: x._id },
   }));
   return { paths, fallback: false };
 }
 
 export async function getStaticProps({ params }) {
-  const project = await getFunctionById(params.id);
-  return { props: project };
+  const project = await oneUserTask(params.id);
+  const tasks = await filteredTasks(project._id, project.taskProgress);
+  return { props: { project, tasks } };
 }

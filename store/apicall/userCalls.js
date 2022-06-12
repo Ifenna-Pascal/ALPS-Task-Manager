@@ -23,4 +23,18 @@ const allTasks = async () => {
   return data;
 };
 
-export { getUserDetails, getUserTasks, allTasks };
+const filteredTasks = async (id, status) => {
+  const data = await sanityClient.fetch(
+    `*[_type == 'tasks' && references('e687b3cb-736d-4948-a6fa-fa73d792e7f2') && taskProgress == "${status}" && _id != "${id}"]`
+  );
+
+  return data;
+};
+const oneUserTask = async (id) => {
+  const data = await sanityClient.fetch(
+    `*[_type == 'tasks' && _id == "${id}"][0]`
+  );
+  return data;
+};
+
+export { getUserDetails, getUserTasks, allTasks, oneUserTask, filteredTasks };

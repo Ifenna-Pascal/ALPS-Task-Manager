@@ -1,20 +1,39 @@
+import Link from "next/link";
 import React from "react";
 import TaskHeading from "../tasks/TaskHeading";
 import Progress from "./Progress";
 
-function CurrentTask({ header, content, deadline, type, duration }) {
+function CurrentTask({ header, content, deadline, type, duration, home, id }) {
   return (
     <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8">
-      <TaskHeading color="bg-blue-400" text={`My ${type.charAt(0).toUpperCase() + type.slice(1,type.length)} Task`} />
+      <div className="flex justify-between">
+        <TaskHeading
+          color="bg-blue-400"
+          text={`My ${
+            type.charAt(0).toUpperCase() + type.slice(1, type.length)
+          } Task`}
+        />
+        {home && (
+          <Link href={`/mytasks/${id}`}>
+            <a>
+              <i className="ri-more-2-line"></i>
+            </a>
+          </Link>
+        )}
+      </div>
       <div className="flex flex-col">
         <span className="font-Roboto capitalize  text-gray-700 text-2xl font-semibold">
           {header}
         </span>
         <div className="mt-3">
-            <span className="block text-gray-400 mb-1 font-Poppins font-semibold">20% completion</span>
+          <span className="block text-gray-400 mb-1 font-Poppins font-semibold">
+            20% completion
+          </span>
           <Progress maxCompleted={20} completed={10} />
         </div>
-        <span className="font-Poppins my-4 text-gray-400 text-base">{content}</span>
+        <span className="font-Poppins my-4 text-gray-400 text-base">
+          {content}
+        </span>
       </div>
       <div className="flex flex-col justify-start">
         <div className="flex mb-4 items-center mr-4">
