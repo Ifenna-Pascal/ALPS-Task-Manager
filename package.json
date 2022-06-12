@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@ramonak/react-progress-bar": "^4.4.0",
+    "@sanity/webhook": "^1.0.2",
+    "nodemailer": "^6.7.5",
     "@reduxjs/toolkit": "^1.8.2",
     "@sanity/client": "^3.3.2",
     "chart.js": "^3.8.0",
@@ -25,6 +27,8 @@
     "remixicons": "^1.0.0"
   },
   "devDependencies": {
+    "@swc/cli": "^0.1.57",
+    "@swc/core": "^1.2.197",
     "autoprefixer": "^10.4.7",
     "eslint": "8.15.0",
     "eslint-config-next": "12.1.6",
