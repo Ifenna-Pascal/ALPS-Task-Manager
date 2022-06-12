@@ -1,22 +1,26 @@
 import React from "react";
+import { useSelector } from 'react-redux';
 
-function UserDetails() {
+
+function userDetails() {
+  const { profile } = useSelector(state => state.users)
+  console.log('profiless', profile)
   return (
     <div className="w-full h-full bg-white  relative ">
       <div className="w-full h-[20%] image rounded-t-xl bg-cover bg-center"></div>
       <div className="w-[100px]  h-[100px] rounded-full flex item-center absolute top-[12%] left-[calc(50%-50px)]">
         <img
           className="object-cover object-center  rounded-full h-full w-full"
-          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          src= {profile && profile.imageUrl}
           alt="avatar"
-        />
+        /> 
       </div>
       <div className="py-20 px-4 lg:px-8">
         <div>
           <span className="block text-gray-700 leading-[24px] text-[20px] lg:text-[26px] font-[500] font-Poppins mb-1">
-            Jeremy .C. Williams
+            {profile && profile.userName}
           </span>
-          <span className="text-[14px] lg:text-[20px] leading-[12px] text-gray-600">
+          <span className="text-[14px] lg:text-[16px] leading-[12px] text-gray-600">
             Backend Developer
           </span>
         </div>
@@ -41,10 +45,10 @@ function UserDetails() {
             </div>
             <div>
               <span className="mb-2 text-base block  text-gray-500">
-                ifennamonanu@gmial.com
+                 {profile && profile.email}
               </span>
               <span className="mb-2 text-base block  text-gray-500">
-                *********  <i className="ri-eye-line ml-4"></i>
+                ********* <i className="ri-eye-line ml-4"></i>
               </span>
               <span className="mb-2 text-base block  text-gray-500">
                 11 Ani Street Enugu
@@ -73,9 +77,11 @@ function UserDetails() {
             </div>
             <div>
               <span className="mb-2 text-base block  text-gray-500">Male</span>
-              <span className="mb-2 text-base block  text-gray-500">Anambra</span>
               <span className="mb-2 text-base block  text-gray-500">
-                11th May, 2005
+                Anambra
+              </span>
+              <span className="mb-2 text-base block  text-gray-500">
+               {profile && profile.dateOfBirth}
               </span>
             </div>
           </div>
@@ -85,4 +91,4 @@ function UserDetails() {
   );
 }
 
-export default UserDetails;
+export default userDetails;
