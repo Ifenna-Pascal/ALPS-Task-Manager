@@ -13,11 +13,10 @@ function OneProject({ project, tasks }) {
   return (
     <div className="flex lg:h-[calc(100vh-7rem)]  flex-col">
       <div
-        className="flex px-6 items-center my-8"
-        onClick={() => router.push("/mytasks")}
+        className="flex px-2 items-center my-8"
       >
         <div className="text-xl text-[#E74141]"></div>
-        <i className="ri-arrow-left-line mr-1"></i>
+        <i className="ri-arrow-left-line mr-1" onClick={() => router.push("/mytasks")} ></i>
         <span className="text-gray-700 font-Poppins font-[400] text-[20px] leading-[24px]">
           Back
         </span>
@@ -45,7 +44,7 @@ function OneProject({ project, tasks }) {
             deadline={project.startDate}
             duration={project.endDate}
           />
-        )) : <EmptyState msg="No Related Task Found" /> }
+        )) : <EmptyState msg="No Related Task Found" />}
       </div>
     </div>
   );

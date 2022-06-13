@@ -1,9 +1,11 @@
 import Link from "next/link";
+import { useRouter } from "next/router";
 import React from "react";
 import TaskHeading from "../tasks/TaskHeading";
 import Progress from "./Progress";
 
 function CurrentTask({ header, content, deadline, type, duration, home, id }) {
+  const router = useRouter();
   return (
     <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8">
       <div className="flex justify-between">
@@ -14,11 +16,11 @@ function CurrentTask({ header, content, deadline, type, duration, home, id }) {
           } Task`}
         />
         {home && (
-          <Link href={`/mytasks/${id}`}>
+          <span onClick={() => router.push(`/mytasks/${id}`)}>
             <a>
               <i className="ri-more-2-line"></i>
             </a>
-          </Link>
+          </span>
         )}
       </div>
       <div className="flex flex-col">

@@ -28,8 +28,6 @@ export default Tasks;
 export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async () => {
     const allTask = await allTasks();
-    console.log("all.................. Task");
-    console.log(allTask);
     await store.dispatch(filterTasks(allTask));
     // await store.dispatch(addCurrentTask(currentTask))
   }
