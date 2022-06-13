@@ -48,7 +48,7 @@ function MobileSearch() {
 
             </div>
             <div
-                className="flex px-5 mb-6 items-center"
+                className="flex px-5 md:hidden mb-6 items-center"
             >
                 <div className="text-xl text-[#E74141]"></div>
                 <i className="ri-arrow-left-line mr-1" onClick={() => router.push("/mytasks")} ></i>
@@ -57,7 +57,7 @@ function MobileSearch() {
                 </span>
             </div>
             {
-                search ? <div className="px-5 max-h-[80vh] mb-12 overflow-y-scroll ">
+                search ? <div className="px-5 max-h-[80vh] md:hidden mb-12 overflow-y-scroll ">
                     {
                         tasks && tasks.filter(m => m.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
                             console.log("......................", i)
@@ -91,7 +91,7 @@ function MobileSearch() {
                         })
 
                     }
-                </div> : <div className="px-5"> <EmptyState msg="No Result Found" /> </div>
+                </div> : <div className="px-5 md:hidden"> <EmptyState msg="No Result Found" /> </div>
             }
         </div>
     )
