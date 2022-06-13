@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import "remixicon/fonts/remixicon.css";
 import { allTasks } from '../../store/apicall/userCalls';
-
+// import { useDispatch, useSelector } from "react-redux";
+// import { allMyTasks } from "../../store/slice/userSlice";
 
 const Display = ({ children, type, ...rest }) => {
   const [show, setShow] = useState(false);
@@ -23,14 +24,16 @@ const Display = ({ children, type, ...rest }) => {
         )}
       </div>
       <div onClick={() => setShow(false)}>
-          {show && children}
+        {show && children}
       </div>
     </div>
   );
 };
 
 function Navbar() {
+  // const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
+  // const { tasks } = useSelector(state => state.users);
   const [search, setSearch] = useState("");
   useEffect(() => async () => {
     const res = await allTasks();
@@ -195,7 +198,7 @@ function Navbar() {
               </div>
             </Display>
             <div className="flex items-center md:hidden text-[#6B6D72] text-2xl">
-              <i className="ri-search-2-line"></i>
+              <Link href="/mobilesearch"><i className="ri-search-2-line"></i></Link>
             </div>
             <div className="relative inline-block">
               <Display type="profile">
@@ -237,7 +240,7 @@ function Navbar() {
       {
         search && <div className="bg-gray-200 duration-300 relative mt-2 rounded-md py-3 px-6">
           {
-            tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
+            tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
               if (!x.taskName) {
                 return <span>No task found</span>
               } else {

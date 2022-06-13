@@ -13,7 +13,7 @@ function OneProject({ project, tasks }) {
   return (
     <div className="flex lg:h-[calc(100vh-7rem)]  flex-col">
       <div
-        className="flex px-2 items-center my-8"
+        className="flex px-6 items-center my-8"
       >
         <div className="text-xl text-[#E74141]"></div>
         <i className="ri-arrow-left-line mr-1" onClick={() => router.push("/mytasks")} ></i>

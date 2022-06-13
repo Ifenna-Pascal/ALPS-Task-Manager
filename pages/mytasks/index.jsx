@@ -1,11 +1,11 @@
 import React from "react";
-import CompletedTask from "../components/userdashboard/tasks/CompletedTask";
-import CurrentTask from "../components/userdashboard/tasks/CurrentTask";
-import InProgress from "../components/userdashboard/tasks/InProgress";
-import PendingTask from "../components/userdashboard/tasks/PendingTask";
-import { allTasks } from "../store/apicall/userCalls";
-import { filterTasks } from "../store/slice/userSlice";
-import { wrapper } from "../store/store";
+import CompletedTask from "../../components/userdashboard/tasks/CompletedTask";
+// import CurrentTask from "../components/userdashboard/tasks/CurrentTask";
+import InProgress from "../../components/userdashboard/tasks/InProgress";
+import PendingTask from "../../components/userdashboard/tasks/PendingTask";
+import { allTasks } from "../../store/apicall/userCalls";
+import { filterTasks } from "../../store/slice/userSlice";
+import { wrapper } from "../../store/store";
 
 function Tasks() {
   return (

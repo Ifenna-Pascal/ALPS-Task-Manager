@@ -12,7 +12,7 @@ const initialState = {
   pendingTask: { total: 0, tasks: [] },
   completedTask: { total: 0, tasks: [] },
   inProgressTask: { total: 0, tasks: [] },
-  myTasks: [],
+  tasks: [],
 };
 
 export const userSlice = createSlice({
@@ -26,7 +26,7 @@ export const userSlice = createSlice({
       state.currentTask = action.payload;
     },
     allMyTasks: (state, action) => {
-      state.myTasks = action.payload;
+      state.tasks = action.payload;
     },
     filterTasks: (state, action) => {
       console.log(filter(action.payload, "pending"), "filter");
