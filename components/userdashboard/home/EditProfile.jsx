@@ -23,7 +23,7 @@ function EditProfile() {
           Edit Profile
         </span>
       </div>
-      <form className="w-full pr-8">
+      <form className="w-full mb-6 md:mb-0 pr-8">
         <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
           <div>
             <label

@@ -75,7 +75,7 @@ function Navbar() {
               type="ri-chat-1-line"
               className="p-1 bg-blue-500 absolute right-[0.1rem] top-1  rounded-full"
             >
-              <div className="absolute right-0 bottom-16 md:bottom-0 z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
+              <div className="absolute right-0 left-0 md:left-auto  bottom-16 md:bottom-auto z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
                 <div className="py-2">
                   <a
                     href="#"
@@ -137,7 +137,7 @@ function Navbar() {
               type="ri-notification-3-line"
               className="p-1 bg-red-500 absolute right-1 top-1  rounded-full"
             >
-              <div className="absolute right-0  z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
+              <div className="absolute md:right-0  md:left-auto bottom-16 md:bottom-auto -left-24 z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
                 <div className="py-2">
                   <a
                     href="#"
@@ -199,7 +199,7 @@ function Navbar() {
             </div>
             <div className="relative inline-block">
               <Display type="profile">
-                <div className="absolute right-0 z-20 w-56 py-2 mt-3 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
+                <div className="absolute right-0  bottom-16 md:bottom-auto z-20 w-56 py-2 mt-3 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
                   <a
                     href="#"
                     className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
