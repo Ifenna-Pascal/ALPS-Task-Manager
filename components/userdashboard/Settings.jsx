@@ -4,13 +4,13 @@ export default function Settings() {
   return (
     <div>
       <div>
-        <section className="p-6 dark:bg-gray-800 dark:text-gray-50">
+        <section className="p-6 ">
           <form
             novalidate=""
             action=""
-            className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
+            className=" flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
           >
-            <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+            <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm ">
               <div className="space-y-2 col-span-full lg:col-span-1">
                 <p className="font-medium">Personal Inormation</p>
                 <p className="text-xs">
@@ -27,7 +27,7 @@ export default function Settings() {
                     id="firstname"
                     type="text"
                     placeholder="First name"
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
@@ -38,7 +38,7 @@ export default function Settings() {
                     id="lastname"
                     type="text"
                     placeholder="Last name"
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
@@ -49,7 +49,7 @@ export default function Settings() {
                     id="email"
                     type="email"
                     placeholder="Email"
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full">
@@ -60,7 +60,7 @@ export default function Settings() {
                     id="address"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-2">
@@ -71,7 +71,7 @@ export default function Settings() {
                     id="city"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-2">
@@ -82,7 +82,7 @@ export default function Settings() {
                     id="state"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-2">
@@ -93,12 +93,12 @@ export default function Settings() {
                     id="zip"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
               </div>
             </fieldset>
-            <fieldset className="grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm dark:bg-gray-900">
+            <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
               <div className="space-y-2 col-span-full lg:col-span-1">
                 <p className="font-medium">Profile</p>
                 <p className="text-xs">Adipisci fuga autem eum!</p>
@@ -112,7 +112,7 @@ export default function Settings() {
                     id="username"
                     type="text"
                     placeholder="Username"
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
@@ -123,7 +123,7 @@ export default function Settings() {
                     id="website"
                     type="text"
                     placeholder="https://"
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full">
@@ -133,7 +133,7 @@ export default function Settings() {
                   <textarea
                     id="bio"
                     placeholder=""
-                    className="w-full p-3 rounded-md"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   ></textarea>
                 </div>
                 <div className="col-span-full">
@@ -144,11 +144,11 @@ export default function Settings() {
                     <img
                       src="https://source.unsplash.com/30x30/?random"
                       alt=""
-                      className="w-10 h-10 rounded-full dark:bg-gray-500 dark:bg-gray-700"
+                      className="w-10 h-10 rounded-full bg-gray-500 "
                     />
                     <button
                       type="button"
-                      className="px-4 py-2 border rounded-md dark:border-gray-100"
+                      className="px-4 py-2 border rounded-md border-gray-100"
                     >
                       Change
                     </button>

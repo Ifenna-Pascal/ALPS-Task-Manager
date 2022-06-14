@@ -5,12 +5,19 @@ import {
   allTasks,
 } from "../store/apicall/userCalls";
 import { wrapper } from "../store/store";
-import { userDetails, addCurrentTask, filterTasks } from "../store/slice/userSlice";
+import {
+  userDetails,
+  addCurrentTask,
+  filterTasks,
+} from "../store/slice/userSlice";
+import MainLayout from "../layout/MainLayout";
 
 export default function Home() {
   return (
     <div>
-      <Dashboard />
+      <MainLayout>
+        <Dashboard />
+      </MainLayout>
     </div>
   );
 }

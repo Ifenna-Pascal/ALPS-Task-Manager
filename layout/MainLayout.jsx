@@ -1,9 +1,17 @@
 import { useState } from "react";
 import Navbar from "../components/userdashboard/Navbar";
 import Sidebar from "../components/userdashboard/Sidebar";
+import { useSession, signIn, signOut } from "next-auth/react";
 
+import { useRouter } from "next/router";
 function MainLayout({ children }) {
   const [show, setShow] = useState(false);
+  const { data } = useSession();
+
+  console.log(data);
+  if (!data) {
+    return useRouter().push("/login");
+  }
   return (
     <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full">
       <Sidebar closeSidebar={setShow} show={show} />
