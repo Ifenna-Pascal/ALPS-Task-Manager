@@ -2,12 +2,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import "remixicon/fonts/remixicon.css";
 import { allTasks } from '../../store/apicall/userCalls';
-// import { useDispatch, useSelector } from "react-redux";
-// import { allMyTasks } from "../../store/slice/userSlice";
-
+ 
 const Display = ({ children, type, ...rest }) => {
   const [show, setShow] = useState(false);
   return (
+    
     <div className="relative">
       <div onClick={() => setShow(!show)}>
         {type === "profile" ? (
@@ -31,9 +30,7 @@ const Display = ({ children, type, ...rest }) => {
 };
 
 function Navbar() {
-  // const dispatch = useDispatch();
   const [tasks, setTasks] = useState([]);
-  // const { tasks } = useSelector(state => state.users);
   const [search, setSearch] = useState("");
   useEffect(() => async () => {
     const res = await allTasks();
