@@ -1,20 +1,66 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import { SanityAdapter, SanityCredentials } from "next-auth-sanity";
-import { client } from "../../../store/apicall/sanityInit";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { signToken } from "../../../util/auth";
+import client from "../../../store/apicall/sanityInit";
+import bcrypt from "bcryptjs";
 
 const options = {
   providers: [
-    GitHub({
-      clientId: process.env.GITHUB_CLIENT_ID,
-      clientSecret: process.env.GITHUB_CLIENT_SECRET,
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        username: { label: "email", type: "email", placeholder: "jsmith" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(_, req) {
+        try {
+          const user = await client.fetch(
+            `*[_type == "user" && email == $email][0]`,
+            {
+              email: req.body.email,
+            }
+          );
+
+          if (user && bcrypt.compareSync(req.body.password, user.password)) {
+            const token = signToken({
+              _id: user._id,
+              name: user.name,
+              email: user.email,
+              isAdmin: user.isAdmin,
+            });
+            res.send({
+              _id: user._id,
+              name: user.name,
+              email: user.email,
+              isAdmin: user.isAdmin,
+              token,
+            });
+          } else {
+            res.status(401).send({ message: "Invalid email or password" });
+          }
+        } catch (error) {
+          console.log(error.response);
+          res.status(401).send({ message: "Invalid email or password" });
+        }
+      },
     }),
-    SanityCredentials(client),
   ],
-  session: {
-    strategy: "jwt",
+  callbacks: {
+    jwt: ({ user }) => {
+      if (user) {
+        return signToken(user);
+      }
+    },
+    async session({ session, token }) {
+      console.log(session, token);
+      return session;
+    },
   },
-  adapter: SanityAdapter(client),
+  pages: {
+    signIn: "auth/signin",
+    newUser: "/", // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  secret: process.env.JWT_SECRET,
 };
 
 export default NextAuth(options);
