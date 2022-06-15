@@ -1,5 +1,6 @@
 import "../styles/globals.css";
 import { wrapper } from "../store/store";
+
 import dynamic from "next/dynamic";
 const ProgressBar = dynamic(() => import("../components/ProgressBar"), {
   ssr: false,

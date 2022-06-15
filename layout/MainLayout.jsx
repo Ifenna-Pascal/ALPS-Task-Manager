@@ -1,19 +1,27 @@
 import { useEffect, useState } from "react";
 import Navbar from "../components/userdashboard/Navbar";
 import Sidebar from "../components/userdashboard/Sidebar";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { loadUser } from "../util/tokenLoad";
+import { loggedUser } from "../store/slice/userSlice";
 function MainLayout({ children }) {
+  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
-  const { data, user } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
-
-  console.log(user);
-  useEffect(() => {
-    if (!user) {
+  useEffect(() => async () => {
+    if (status === "unauthenticated") {
       router.push("/auth/signin");
     }
-  }, [user]);
+    if (session) {
+      console.log(session);
+      const user = await loadUser(session?.user?.accessToken);
+      console.log(user)
+      dispatch(loggedUser(user))
+    }
+  }, [session]);
 
   return (
     <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full">
@@ -25,9 +33,8 @@ function MainLayout({ children }) {
           onClick={() => setShow(!show)}
         >
           <i
-            className={`${
-              show ? "ri-close-line" : "ri-menu-5-line"
-            } text-white  font-bold text-3xl`}
+            className={`${show ? "ri-close-line" : "ri-menu-5-line"
+              } text-white  font-bold text-3xl`}
           ></i>
         </div>
         <main className="w-full mx-auto">{children}</main>

@@ -9,51 +9,52 @@ const options = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        username: { label: "email", type: "email", placeholder: "jsmith" },
+        email: { label: "email", type: "email", placeholder: "jsmith" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(_, req) {
+      async authorize(credentials, req) {
+        console.log(credentials);
         try {
           const user = await client.fetch(
-            `*[_type == "user" && email == $email][0]`,
-            {
-              email: req.body.email,
-            }
+            `*[_type == "user" && email == "${credentials.email}"][0]`
           );
-
-          if (user && bcrypt.compareSync(req.body.password, user.password)) {
-            const token = signToken({
-              _id: user._id,
-              name: user.name,
-              email: user.email,
-              isAdmin: user.isAdmin,
-            });
-            res.send({
-              _id: user._id,
-              name: user.name,
-              email: user.email,
-              isAdmin: user.isAdmin,
-              token,
-            });
+          if (!user) throw new Error("User not found, Incorrect Credentials");
+          if (!bcrypt.compareSync(credentials.password, user.password)) {
+            throw new Error("password does not match");
           } else {
-            res.status(401).send({ message: "Invalid email or password" });
+            console.log("my user", user);
+            return user;
           }
         } catch (error) {
-          console.log(error.response);
-          res.status(401).send({ message: "Invalid email or password" });
+          console.log(error);
+          throw new Error(error);
         }
       },
     }),
   ],
+  session: {
+    updateAge: 0,
+    strategy: 'jwt',
+    maxAge: 30 * 24 * 60 * 60,
+  },
+  // jwt: {
+  //   secret: process.env.TOKEN_SECRET,
+  //   maxAge: 30 * 24 * 60 * 60,
+  // },
   callbacks: {
-    jwt: ({ user }) => {
-      console.log(user, "user..........................")
-      if (user) {
-        return signToken(user);
+    async jwt({ token, user, account }) {
+      console.log(token, "toknnnnnn");
+      if (account && user) {
+        const userToken = signToken(user);
+        return {
+          ...token,
+          accessToken: userToken,
+        };
       }
+      return token;
     },
     async session({ session, token }) {
-      console.log(token, session, '.......')
+      session.user.accessToken = token.accessToken;
       console.log(session, token);
       return session;
     },

@@ -7,6 +7,7 @@ const filter = (array, type) => {
 
 const initialState = {
   profile: {},
+  loggedInUser: {},
   currentTask: {},
   allTasks: 0,
   pendingTask: { total: 0, tasks: [] },
@@ -19,6 +20,9 @@ export const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    loggedUser: (state, action) => {
+      state.loggedInUser = {...action.payload}
+    },
     userDetails: (state, action) => {
       state.profile = action.payload;
     },
@@ -47,6 +51,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { userDetails, addCurrentTask, filterTasks, allMyTasks } = userSlice.actions;
+export const { userDetails, addCurrentTask, filterTasks, allMyTasks, loggedUser } = userSlice.actions;
 
 export default userSlice.reducer;

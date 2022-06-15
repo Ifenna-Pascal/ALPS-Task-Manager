@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { signIn, getProviders, getCsrfToken } from "next-auth/react";
+import { signIn, getCsrfToken } from "next-auth/react";
 import { useRouter } from "next/router";
 export default function Login({ csrfToken }) {
   const router = useRouter();
@@ -7,24 +7,26 @@ export default function Login({ csrfToken }) {
     email: "",
     password: "",
   });
-
+  const [error, setError] = useState("");
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    try {
-      await signIn("credentials", {
-        redirect: false,
-        email: userData.email,
-        password: userData.password,
-        callbackUrl: `${window.location.origin}`,
-      });
-      router.push("/");
-    } catch (error) {
-      console.log(error);
+    const res = await signIn("credentials", {
+      redirect: false,
+      email: userData.email,
+      password: userData.password,
+      callbackUrl: `${window.location.origin}`,
+    });
+    console.log(res);
+    if (res?.error) {
+      setError(res.error);
+    } else {
+      setError(null);
     }
+    if (res.url) router.push(res.url);
   };
 
   return (
@@ -34,7 +36,11 @@ export default function Login({ csrfToken }) {
           <h1 className="text-3xl font-semibold text-center text-blue-700">
             ALPS
           </h1>
-
+          {error && (
+            <div className="w-full bg-red-400 text-center py-1 text-white">
+              {error}
+            </div>
+          )}
           <form className="mt-6" onSubmit={handleLogin}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <div>

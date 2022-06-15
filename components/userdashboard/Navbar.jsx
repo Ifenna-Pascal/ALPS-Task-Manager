@@ -1,20 +1,23 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import "remixicon/fonts/remixicon.css";
+import { signOut } from "next-auth/react"
 import { allTasks } from '../../store/apicall/userCalls';
- 
+import { useSelector } from "react-redux";  
+
 const Display = ({ children, type, ...rest }) => {
+  const { loggedInUser} = useSelector(state => state.users);
   const [show, setShow] = useState(false);
   return (
     
     <div className="relative">
       <div onClick={() => setShow(!show)}>
         {type === "profile" ? (
-          <img
-            className="object-cover  rounded-full h-8 w-8"
-            src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-            alt="avatar"
-          />
+          loggedInUser?.ImageURL?  <img
+          className="object-cover  rounded-full h-8 w-8"
+          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+          alt="avatar"
+        /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName.charAt(0).toUpperCase()} </span>
         ) : (
           <div className="flex items-center relative text-[#6B6D72] text-2xl">
             <span {...rest}></span>
@@ -32,6 +35,7 @@ const Display = ({ children, type, ...rest }) => {
 function Navbar() {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
+  const { loggedInUser} = useSelector(state => state.users);
   useEffect(() => async () => {
     const res = await allTasks();
     if (res) {
@@ -70,7 +74,7 @@ function Navbar() {
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
-          <div className="flex justify-between md:w-[20%] w-[90%] mx-auto md:mx-0">
+          <div className="flex justify-between items-center md:w-[20%] w-[90%] mx-auto md:mx-0">
             <Display
               type="ri-chat-1-line"
               className="p-1 bg-blue-500 absolute right-[0.1rem] top-1  rounded-full"
@@ -206,10 +210,10 @@ function Navbar() {
                   >
                     <div className="mx-1">
                       <h1 className="text-sm font-semibold text-gray-700 dark:text-gray-200">
-                        Jane Doe
+                        {loggedInUser && loggedInUser.userName}
                       </h1>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                        janedoe@exampl.com
+                      {loggedInUser && loggedInUser.email}
                       </p>
                     </div>
                   </a>
@@ -223,6 +227,7 @@ function Navbar() {
                   </Link>
 
                   <a
+                    onClick={() => signOut()}
                     href="#"
                     className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
