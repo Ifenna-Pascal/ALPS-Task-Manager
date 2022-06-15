@@ -47,11 +47,13 @@ const options = {
   ],
   callbacks: {
     jwt: ({ user }) => {
+      console.log(user, "user..........................")
       if (user) {
         return signToken(user);
       }
     },
     async session({ session, token }) {
+      console.log(token, session, '.......')
       console.log(session, token);
       return session;
     },
