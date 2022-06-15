@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { signUp } from "next-auth-sanity/client";
-import { signIn } from "next-auth/react";
-
-export default function login() {
+import { signIn, getProviders, getCsrfToken } from "next-auth/react";
+import { useRouter } from "next/router";
+export default function Login({ csrfToken }) {
+  const router = useRouter();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
@@ -14,12 +14,17 @@ export default function login() {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log({ email: userData.email, password: userData.password });
-    await signIn("sanity-login", {
-      redirect: false,
-      email: userData.email,
-      password: userData.password,
-    });
+    try {
+      await signIn("credentials", {
+        redirect: false,
+        email: userData.email,
+        password: userData.password,
+        callbackUrl: `${window.location.origin}`,
+      });
+      router.push("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -31,6 +36,7 @@ export default function login() {
           </h1>
 
           <form className="mt-6" onSubmit={handleLogin}>
+            <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <div>
               <label for="email" className="block text-sm text-gray-800">
                 Email
@@ -70,4 +76,12 @@ export default function login() {
       </div>
     </div>
   );
+}
+
+export async function getServerSideProps(context) {
+  return {
+    props: {
+      csrfToken: await getCsrfToken(context),
+    },
+  };
 }
