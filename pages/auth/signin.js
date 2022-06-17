@@ -32,7 +32,7 @@ export default function Login({ csrfToken }) {
   return (
     <div>
       <div className="relative flex flex-col justify-center mx-3 min-h-screen overflow-hidden">
-        <div className="w-full p-6 m-auto bg-white border-t border-blue-600 rounded shadow-lg shadow-blue-800/50 lg:max-w-md">
+        <div className="w-full p-6 m-auto bg-white border-t shadow-lg lg:max-w-md">
           <h1 className="text-3xl font-semibold text-center text-blue-700">
             ALPS
           </h1>
