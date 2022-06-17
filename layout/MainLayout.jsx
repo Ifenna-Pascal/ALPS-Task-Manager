@@ -3,23 +3,16 @@ import Navbar from "../components/userdashboard/Navbar";
 import Sidebar from "../components/userdashboard/Sidebar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useDispatch, useSelector } from "react-redux";
-import { loadUser } from "../util/tokenLoad";
-import { loggedUser } from "../store/slice/userSlice";
+// import { useDispatch, useSelector } from "react-redux";
+// import { loadUser } from "../util/tokenLoad";
+// import { loggedUser } from "../store/slice/userSlice";
 function MainLayout({ children }) {
-  const dispatch = useDispatch();
   const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
   useEffect(() => async () => {
     if (status === "unauthenticated") {
       router.push("/auth/signin");
-    }
-    if (session) {
-      console.log(session);
-      const user = await loadUser(session?.user?.accessToken);
-      console.log(user)
-      dispatch(loggedUser(user))
     }
   }, [session]);
 

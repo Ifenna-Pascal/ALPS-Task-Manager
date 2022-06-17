@@ -13,7 +13,7 @@ const options = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        console.log(credentials);
+        // console.log(credentials);
         try {
           const user = await client.fetch(
             `*[_type == "user" && email == "${credentials.email}"][0]`
@@ -22,11 +22,10 @@ const options = {
           if (!bcrypt.compareSync(credentials.password, user.password)) {
             throw new Error("password does not match");
           } else {
-            console.log("my user", user);
+            // console.log("my user", user);
             return user;
           }
         } catch (error) {
-          console.log(error);
           throw new Error(error);
         }
       },
@@ -43,7 +42,7 @@ const options = {
   // },
   callbacks: {
     async jwt({ token, user, account }) {
-      console.log(token, "toknnnnnn");
+      // console.log(token, "toknnnnnn");
       if (account && user) {
         const userToken = signToken(user);
         return {
@@ -55,7 +54,7 @@ const options = {
     },
     async session({ session, token }) {
       session.user.accessToken = token.accessToken;
-      console.log(session, token);
+      // console.log(session, token);
       return session;
     },
   },

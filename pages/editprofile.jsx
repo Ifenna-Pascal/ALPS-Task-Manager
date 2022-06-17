@@ -1,10 +1,12 @@
+import { getSession } from "next-auth/react";
 import React from "react";
 import EditProfile from "../components/userdashboard/home/EditProfile";
 import UserDetails from "../components/userdashboard/home/UserDetails";
 import MainLayout from "../layout/MainLayout";
 import { getUserDetails } from "../store/apicall/userCalls";
-import { userDetails } from "../store/slice/userSlice";
+import { userDetails, loggedUser } from "../store/slice/userSlice";
 import { wrapper } from "../store/store";
+import { loadUser } from "../util/tokenLoad";
 
 function Editprofile() {
   return (
@@ -20,9 +22,12 @@ function Editprofile() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
-    const res = await getUserDetails();
-    await store.dispatch(userDetails(res));
+  (store) => async ({ req, res }) => {
+    const session = await getSession({ req })
+    const fetchedUser = await loadUser(session?.user?.accessToken);
+    const result = await getUserDetails(fetchedUser?._id);
+    await store.dispatch(loggedUser(fetchedUser));
+    await store.dispatch(userDetails(result));
   }
 );
 

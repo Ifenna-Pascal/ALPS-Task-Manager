@@ -1,31 +1,31 @@
 import sanityClient from "./sanityInit";
 
-const getUserDetails = async () => {
+const getUserDetails = async (id) => {
   const data = await sanityClient.fetch(
-    `*[_type == 'user' && userName == 'chisom']{..., "imageUrl": userImage.asset->url}[0]`
+    `*[_type == 'user' && _id == "${id}"]{..., "imageUrl": userImage.asset->url, "headerUrl": headerImage.asset->url}[0]`
   );
   console.log(data);
   return data;
 };
 
-const getUserTasks = async () => {
+const getUserTasks = async (id) => {
   const data = await sanityClient.fetch(
-    `*[_type == 'tasks' && references('e687b3cb-736d-4948-a6fa-fa73d792e7f2') && taskProgress == 'assigned'] {..., user->}[0] `
+    `*[_type == 'tasks' && references("${id}") && taskProgress == 'assigned'] {..., user->}[0] `
   );
   return data;
 };
 
-const allTasks = async () => {
+const allTasks = async (id) => {
   const data = await sanityClient.fetch(
-    `*[_type == 'tasks' && references('e687b3cb-736d-4948-a6fa-fa73d792e7f2')]`
+    `*[_type == 'tasks' && references('${id}')]`
   );
 
   return data;
 };
 
-const filteredTasks = async (id, status) => {
+const filteredTasks = async (id, status, user_id) => {
   const data = await sanityClient.fetch(
-    `*[_type == 'tasks' && references('e687b3cb-736d-4948-a6fa-fa73d792e7f2') && taskProgress == "${status}" && _id != "${id}"]`
+    `*[_type == 'tasks' && references("${user_id}") && taskProgress == "${status}" && _id != "${id}"]`
   );
 
   return data;

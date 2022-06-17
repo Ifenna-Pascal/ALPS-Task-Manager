@@ -9,8 +9,11 @@ import {
   userDetails,
   addCurrentTask,
   filterTasks,
+  loggedUser,
 } from "../store/slice/userSlice";
 import MainLayout from "../layout/MainLayout";
+import { getSession } from 'next-auth/react';
+import { loadUser } from "../util/tokenLoad";
 
 export default function Home() {
   return (
@@ -23,12 +26,17 @@ export default function Home() {
 }
 
 export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async () => {
-    const res = await getUserDetails();
-    const currentTask = await getUserTasks();
-    const allTask = await allTasks();
+  (store) => async ({req,res}) => {
+    const session = await getSession({req})
+    console.log('sessionss');
+    const fetchedUser = await loadUser(session?.user?.accessToken);
+    console.log(session, "Sessionsss");
+    const result = await getUserDetails(fetchedUser?._id);
+    const currentTask = await getUserTasks(fetchedUser?._id);
+    const allTask = await allTasks(fetchedUser?._id);
     await store.dispatch(filterTasks(allTask));
-    await store.dispatch(userDetails(res));
+    await store.dispatch(loggedUser(fetchedUser));
+    await store.dispatch(userDetails(result));
     await store.dispatch(addCurrentTask(currentTask));
   }
 );

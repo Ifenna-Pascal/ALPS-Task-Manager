@@ -13,6 +13,7 @@ const masterReducer = (state, action) => {
       ...state,
       users: {
         profile: action.payload?.users?.profile,
+        loggedInUser: action.payload?.users?.loggedInUser,
         currentTask: action.payload?.users?.currentTask,
         allTasks: action.payload?.users?.allTasks,
         pendingTask: action.payload?.users?.pendingTask,

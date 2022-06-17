@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 
 function userDetails() {
   const { profile } = useSelector(state => state.users)
-  console.log('profiless', profile)
+  const IMAGE = profile?.headerUrl ? profile.headerUrl : '/project.png';
   return (
     <div className="w-full h-full bg-white  relative ">
-      <div className="w-full h-[20%] image rounded-t-xl bg-cover bg-center"></div>
+      <div className={`w-full h-[20%] bg-blend-darken bg-cover bg-center`} style={{ backgroundImage: `url(${IMAGE})` }}></div>
       <div className="w-[100px]  h-[100px] rounded-full flex item-center absolute top-[12%] left-[calc(50%-50px)]">
         <img
           className="object-cover object-center  rounded-full h-full w-full"

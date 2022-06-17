@@ -3,21 +3,22 @@ import Link from "next/link";
 import "remixicon/fonts/remixicon.css";
 import { signOut } from "next-auth/react"
 import { allTasks } from '../../store/apicall/userCalls';
-import { useSelector } from "react-redux";  
+import { useSelector } from "react-redux";
+import { useSession } from 'next-auth/react';
 
 const Display = ({ children, type, ...rest }) => {
-  const { loggedInUser} = useSelector(state => state.users);
+  const { loggedInUser } = useSelector(state => state.users);
   const [show, setShow] = useState(false);
   return (
-    
+
     <div className="relative">
       <div onClick={() => setShow(!show)}>
         {type === "profile" ? (
-          loggedInUser?.ImageURL?  <img
-          className="object-cover  rounded-full h-8 w-8"
-          src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
-          alt="avatar"
-        /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName.charAt(0).toUpperCase()} </span>
+          loggedInUser?.ImageURL ? <img
+            className="object-cover  rounded-full h-8 w-8"
+            src="https://images.unsplash.com/photo-1531427186611-ecfd6d936c79?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80"
+            alt="avatar"
+          /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
         ) : (
           <div className="flex items-center relative text-[#6B6D72] text-2xl">
             <span {...rest}></span>
@@ -35,9 +36,11 @@ const Display = ({ children, type, ...rest }) => {
 function Navbar() {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
-  const { loggedInUser} = useSelector(state => state.users);
+  const { loggedInUser } = useSelector(state => state.users);
   useEffect(() => async () => {
-    const res = await allTasks();
+    console.log(loggedInUser, "usersss");
+    const res = await allTasks(loggedInUser?._id);
+    console.log(res, "response");
     if (res) {
       setTasks(res);
     }
@@ -213,7 +216,7 @@ function Navbar() {
                         {loggedInUser && loggedInUser.userName}
                       </h1>
                       <p className="text-sm text-gray-500 dark:text-gray-400">
-                      {loggedInUser && loggedInUser.email}
+                        {loggedInUser && loggedInUser.email}
                       </p>
                     </div>
                   </a>
@@ -227,7 +230,7 @@ function Navbar() {
                   </Link>
 
                   <a
-                    onClick={() => signOut()}
+                    onClick={() => signOut({ callbackUrl: `${window.location.origin}/auth/signin` })}
                     href="#"
                     className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
@@ -240,12 +243,17 @@ function Navbar() {
         </div>
       </div>
       {
-        search && <div className="bg-gray-200 duration-300 relative mt-2 rounded-md py-3 px-6">
+        search && <div className="bg-gray-200 duration-300 relative mt-2  py-3 px-6">
+          {
+            tasks && tasks.length === 0 && <div className="text-left w-full text-base font-Roboto"> NO TASKS FOUND </div>
+          }
+          {
+            tasks &&  tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="text-left w-full text-base font-Roboto"> NO MATCH </div>
+          }
           {
             tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
-              if (!x.taskName) {
-                return <span>No task found</span>
-              } else {
+
+              {
                 return (<div className="w-full" key={i} onClick={() => setSearch("")}>
 
                   <Link href={`/mytasks/${x._id}`}>

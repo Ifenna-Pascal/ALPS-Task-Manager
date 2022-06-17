@@ -2,6 +2,7 @@ import React from "react";
 import CurrentTask from "../../components/userdashboard/home/CurrentTask";
 import Taskcard from "../../components/userdashboard/tasks/Taskcard";
 import EmptyState from "../../components/EmptyState";
+import { getSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import {
   allTasks,
@@ -9,6 +10,7 @@ import {
   oneUserTask,
 } from "../../store/apicall/userCalls";
 import MainLayout from "../../layout/MainLayout";
+import { loadUser } from "../../util/tokenLoad";
 function OneProject({ project, tasks }) {
   const router = useRouter();
   return (
@@ -60,16 +62,17 @@ function OneProject({ project, tasks }) {
 
 export default OneProject;
 
-export async function getStaticPaths() {
-  const projects = await allTasks();
-  const paths = projects.map((x) => ({
-    params: { id: x._id },
-  }));
-  return { paths, fallback: false };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ req, res, params }) {
+  const session = await getSession({ req })
+  console.log('sessionss');
+  const fetchedUser = await loadUser(session?.user?.accessToken);
   const project = await oneUserTask(params.id);
-  const tasks = await filteredTasks(project._id, project.taskProgress);
+  const tasks = await filteredTasks(project._id, project.taskProgress,fetchedUser?._id);
   return { props: { project, tasks } };
 }
+
+// export async function getStaticProps({ params }) {
+//   const project = await oneUserTask(params.id);
+//   const tasks = await filteredTasks(project._id, project.taskProgress);
+//   return { props: { project, tasks } };
+// }

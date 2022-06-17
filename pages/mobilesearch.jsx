@@ -1,16 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { allTasks } from '../store/apicall/userCalls';
 import Link from 'next/link';
 import Taskcard from '../components/userdashboard/tasks/Taskcard';
 import EmptyState from '../components/EmptyState';
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 
 function MobileSearch() {
+    const textInput = useRef(null);
     const router = useRouter();
     const [search, setSearch] = useState("");
     const [tasks, setTasks] = useState([]);
+    const { loggedInUser } = useSelector(state => state.users);
     useEffect(() => async () => {
-        const res = await allTasks();
+        textInput.current?.focus();
+        const res = await allTasks(loggedInUser?._id);
         if (res) {
             setTasks(res);
         }
@@ -40,6 +44,7 @@ function MobileSearch() {
 
                 <input
                     type="text"
+                    ref={textInput}
                     className="w-full  pl-9 py-4 text-gray-700 mb-1 bg-gray-200  rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 rounded-2xl focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-100 focus:ring-opacity-40 text-[15px] focus:outline-none focus:ring"
                     placeholder="Search By Taskname..."
                     value={search}
@@ -59,35 +64,32 @@ function MobileSearch() {
             {
                 search ? <div className="px-5 max-h-[80vh] md:hidden mb-12 overflow-y-scroll ">
                     {
+                        // tasks && tasks.length === 0 && <div className="py-5 md:hidden"> <EmptyState msg="No Result Found" /></div>
+                    }
+                    {
+                        tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="py-5 md:hidden"> <EmptyState msg="No Result Found" /> </div>
+                    }
+                    {
                         tasks && tasks.filter(m => m.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
-                            console.log("......................", i)
-                            if (x === null) {
-                                console.log("......................", x)
-                                return <span>No task found</span>
-                            } else {
-                                // console.log("......................", x)
-                                // return <span>No task found</span>
-                                return (<div className="w-full" key={i} onClick={() => setSearch("")}>
-                                    <Link href={`/mytasks/${x._id}`}>
-                                        <a>
-                                            <Taskcard
-                                                key={i}
-                                                id={x._id}
-                                                header={x.taskName}
-                                                content={
-                                                    x.taskDescription
-                                                        ? x.taskDescription.slice(0, x.taskDescription.length / 2)
-                                                        : ""
-                                                }
-                                                deadline={x.startDate}
-                                                duration={x.endDate}
-                                            />
-                                        </a>
-                                    </Link>
+                            return (<div className="w-full" key={i} onClick={() => setSearch("")}>
+                                <Link href={`/mytasks/${x._id}`}>
+                                    <a>
+                                        <Taskcard
+                                            key={i}
+                                            id={x._id}
+                                            header={x.taskName}
+                                            content={
+                                                x.taskDescription
+                                                    ? x.taskDescription.slice(0, x.taskDescription.length / 2)
+                                                    : ""
+                                            }
+                                            deadline={x.startDate}
+                                            duration={x.endDate}
+                                        />
+                                    </a>
+                                </Link>
 
-                                </div>)
-
-                            }
+                            </div>)
                         })
 
                     }
