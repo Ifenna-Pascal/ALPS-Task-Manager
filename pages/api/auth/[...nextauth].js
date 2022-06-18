@@ -16,7 +16,7 @@ const options = {
         // console.log(credentials);
         try {
           const user = await client.fetch(
-            `*[_type == "user" && email == "${credentials.email}"][0]`
+            `*[_type == "user" && email == "${credentials.email}"]{..., "imageUrl": userImage.asset->url, "headerUrl": headerImage.asset->url}[0]`
           );
           if (!user) throw new Error("User not found, Incorrect Credentials");
           if (!bcrypt.compareSync(credentials.password, user.password)) {

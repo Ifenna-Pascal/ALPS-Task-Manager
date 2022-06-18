@@ -10,7 +10,8 @@ function MainLayout({ children }) {
   const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
-  useEffect(() => async () => {
+  useEffect(() =>  {
+    console.log(status, "status")
     if (status === "unauthenticated") {
       router.push("/auth/signin");
     }
