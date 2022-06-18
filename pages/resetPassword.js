@@ -45,7 +45,7 @@ export default function Login({ csrfToken }) {
           <form className="mt-6" onSubmit={handleLogin}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <div>
-              <label for="email" className="block text-sm text-gray-800">
+              <label htmlFor="email" className="block text-sm text-gray-800">
                 Email
               </label>
               <input
@@ -58,7 +58,7 @@ export default function Login({ csrfToken }) {
             </div>
             <div className="mt-4">
               <div>
-                <label for="password" className="block text-sm text-gray-800">
+                <label htmlFor="password" className="block text-sm text-gray-800">
                   old Password
                 </label>
                 <input
@@ -72,7 +72,7 @@ export default function Login({ csrfToken }) {
             </div>
             <div className="mt-4">
               <div>
-                <label for="password" className="block text-sm text-gray-800">
+                <label htmlFor="password" className="block text-sm text-gray-800">
                   Password
                 </label>
                 <input
@@ -87,7 +87,7 @@ export default function Login({ csrfToken }) {
             <div className="mt-4">
               <div>
                 <label
-                  for="confirmPassword"
+                  htmlFor="confirmPassword"
                   className="block text-sm text-gray-800"
                 >
                   confirm Password

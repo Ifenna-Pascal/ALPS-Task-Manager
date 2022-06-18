@@ -5,17 +5,17 @@ import MainLayout from "../../layout/MainLayout";
 const settings = [
   {
     title: "Personal Inormation",
-    icon: <i class="ri-user-line"></i>,
+    icon: <i className="ri-user-line"></i>,
     link: "/settings/account",
   },
   {
     title: "Password/Security",
-    icon: <i class="ri-fingerprint-2-line"></i>,
+    icon: <i className="ri-fingerprint-2-line"></i>,
     link: "/settings/password",
   },
   {
     title: "Profile Photo",
-    icon: <i class="ri-user-smile-line"></i>,
+    icon: <i className="ri-user-smile-line"></i>,
     link: "/settings/profile",
   },
   {
@@ -35,7 +35,7 @@ export default function index() {
               Customise the look and feel of your application
             </p>
             {settings.map((setting, index) => (
-              <Link href={setting.link}>
+              <Link key={index} href={setting.link}>
                 <a>
                   <div
                     key={setting}

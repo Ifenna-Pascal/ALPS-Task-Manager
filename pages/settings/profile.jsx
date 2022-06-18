@@ -11,7 +11,7 @@ export default function ProfileSettings() {
               Settings
             </p>
             <form
-              novalidate=""
+              noValidate=""
               action=""
               className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
             >

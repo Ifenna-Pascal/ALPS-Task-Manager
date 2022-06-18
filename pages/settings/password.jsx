@@ -11,7 +11,7 @@ export default function PasswordSettings() {
               Settings
             </p>
             <form
-              novalidate=""
+              noValidate=""
               action=""
               className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
             >
@@ -25,7 +25,7 @@ export default function PasswordSettings() {
                 </div>
                 <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                   <div className="col-span-full ">
-                    <label for="currentPassword" className="text-sm">
+                    <label htmlFor="currentPassword" className="text-sm">
                       Enter Current Password
                     </label>
                     <input
@@ -36,7 +36,7 @@ export default function PasswordSettings() {
                     />
                   </div>
                   <div className="col-span-full ">
-                    <label for="newPassword" className="text-sm">
+                    <label htmlFor="newPassword" className="text-sm">
                       Enter New Password
                     </label>
                     <input
@@ -47,7 +47,7 @@ export default function PasswordSettings() {
                     />
                   </div>
                   <div className="col-span-full ">
-                    <label for="email" className="text-sm">
+                    <label htmlFor="email" className="text-sm">
                       Enter Verification Email
                     </label>
                     <div className="flex">
