@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from 'react-redux';
 
 
-function userDetails() {
+function UserDetails() {
   const { profile } = useSelector(state => state.users)
   const IMAGE = profile?.headerUrl ? profile.headerUrl : '/project.png';
   return (
@@ -91,4 +91,5 @@ function userDetails() {
   );
 }
 
-export default userDetails;
+export default UserDetails;
+  
