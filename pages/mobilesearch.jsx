@@ -15,6 +15,7 @@ function MobileSearch() {
     useEffect(() => async () => {
         textInput.current?.focus();
         const res = await allTasks(loggedInUser?._id);
+        console.log(res);
         if (res) {
             setTasks(res);
         }
