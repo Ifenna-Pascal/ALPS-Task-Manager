@@ -12,7 +12,7 @@ const updateUserDetails = async (user_id, userDetails) => {
   sanityClient
     .patch(`${user_id}`)
     .set({
-      username: userDetails.username,
+      username: userDetails.userName,
       // email: userDetails.email
     })
     .commit()

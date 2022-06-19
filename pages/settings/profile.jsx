@@ -6,7 +6,7 @@ export default function ProfileSettings() {
     <MainLayout>
       <div>
         <div>
-          <section className="p-6">
+          <section className="py-6">
             <p className="text-gray-700 text-2xl font-bold mt-5 mb-6">
               Settings
             </p>
@@ -15,7 +15,7 @@ export default function ProfileSettings() {
               action=""
               className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
             >
-              <fieldset className="p-6 rounded-md shadow-sm bg-white lg:px-24 pt-10 pb-10">
+              <fieldset className="py-6 rounded-md shadow-sm bg-white lg:px-24 pt-10 pb-10">
                 <div className="space-y-2 col-span-full mb-6">
                   <p className="font-medium">Profile Settings</p>
                   <p className="text-xs">

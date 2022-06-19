@@ -11,11 +11,11 @@ import { loadUser } from "../util/tokenLoad";
 function Editprofile() {
   return (
     <MainLayout>
-      <div className="grid lg:my-12 sticky top-0 lg:h-[calc(100vh-12rem)] grid-cols-1 lg:grid-cols-2 space-x-4">
+      <div className="grid lg:my-12 sticky top-0 lg:h-[calc(100vh-12rem)] grid-cols-1 md:max-w-[70%] mx-auto space-x-4">
         <div className="col-span-1">
           <UserDetails />
         </div>
-        <EditProfile />
+        {/* <EditProfile /> */}
       </div>
     </MainLayout>
   );

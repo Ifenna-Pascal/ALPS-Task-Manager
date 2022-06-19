@@ -30,7 +30,7 @@ export default function index() {
       <div className=" min-h-screen">
         <div className=" mx-auto px-8 ">
           <p className="text-gray-700 text-2xl font-bold mt-5 mb-6">Settings</p>
-          <div className=" bg-white rounded mt-5 px-4 lg:px-24 py-12 ">
+          <div className=" bg-white rounded mt-5  lg:px-24 py-12 ">
             <p className="text-gray-600 mb-4">
               Customise the look and feel of your application
             </p>

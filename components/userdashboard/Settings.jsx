@@ -4,7 +4,7 @@ export default function Settings() {
   return (
     <div>
       <div>
-        <section className="p-6 ">
+        <section className="p-3">
           <form
             noValidate=""
             action=""
@@ -12,10 +12,9 @@ export default function Settings() {
           >
             <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm ">
               <div className="space-y-2 col-span-full lg:col-span-1">
-                <p className="font-medium">Personal Inormation</p>
-                <p className="text-xs">
-                  Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                  Adipisci fuga autem eum!
+                <p className="font-medium">Personal Information</p>
+                <p className="text-sm text-gray-800">
+                  Update Personal Information
                 </p>
               </div>
               <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
@@ -41,7 +40,7 @@ export default function Settings() {
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-3">
+                {/* <div className="col-span-full sm:col-span-3">
                   <label htmlFor="email" className="text-sm">
                     Email
                   </label>
@@ -51,7 +50,7 @@ export default function Settings() {
                     placeholder="Email"
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
-                </div>
+                </div> */}
                 <div className="col-span-full">
                   <label htmlFor="address" className="text-sm">
                     Address
@@ -101,7 +100,7 @@ export default function Settings() {
             <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
               <div className="space-y-2 col-span-full lg:col-span-1">
                 <p className="font-medium">Profile</p>
-                <p className="text-xs">Adipisci fuga autem eum!</p>
+                <p className="text-md text-gray-800">Update your profile status</p>
               </div>
               <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                 <div className="col-span-full sm:col-span-3">
@@ -136,7 +135,7 @@ export default function Settings() {
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   ></textarea>
                 </div>
-                <div className="col-span-full">
+                {/* <div className="col-span-full">
                   <label htmlFor="bio" className="text-sm">
                     Photo
                   </label>
@@ -153,9 +152,15 @@ export default function Settings() {
                       Change
                     </button>
                   </div>
-                </div>
+                </div> */}
               </div>
             </fieldset>
+            <div className="mb-[400px]">
+              <button className="px-6 py-2 leading-5 text-white transition-colors duration-200 transhtmlForm bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                Update
+              </button>
+            </div>
+            
           </form>
         </section>
       </div>
