@@ -28,7 +28,6 @@ export default function Login({ csrfToken }) {
     }
     if (res.url) router.push(res.url);
   };
-
   return (
     <div>
       <div className="relative flex flex-col justify-center mx-3 min-h-screen overflow-hidden">

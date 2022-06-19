@@ -3,19 +3,30 @@ import Navbar from "../components/userdashboard/Navbar";
 import Sidebar from "../components/userdashboard/Sidebar";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-// import { useDispatch, useSelector } from "react-redux";
-// import { loadUser } from "../util/tokenLoad";
-// import { loggedUser } from "../store/slice/userSlice";
+import sanityClient from "../store/apicall/sanityInit";
 function MainLayout({ children }) {
   const [show, setShow] = useState(false);
   const { data: session, status } = useSession();
   const router = useRouter();
+  // f420ddb9-250f-4ccb-9e0e-9152daf87d8a
+  const getUserDetails = async (id) => {
+    const data = await sanityClient.fetch(
+      `*[_type == 'user' && _id == "${id}"]{..., "imageUrl": userImage.asset->url, "headerUrl": headerImage.asset->url}[0]`
+    );
+    console.log(data);
+    return data;
+  };
   useEffect(() =>  {
     console.log(status, "status")
     if (status === "unauthenticated") {
       router.push("/auth/signin");
     }
   }, [session]);
+
+  useEffect(()=> async ()=> {
+    const res = await getUserDetails("f420ddb9-250f-4ccb-9e0e-9152daf87d8a");
+    console.log(res, "testeed test")
+  },[])
 
   return (
     <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full">
