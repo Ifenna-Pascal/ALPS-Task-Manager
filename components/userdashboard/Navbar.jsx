@@ -38,7 +38,7 @@ function Navbar() {
   useEffect(() => async () => {
     console.log(loggedInUser, "usersss");
     const res = await allTasks(loggedInUser?._id);
-    console.log(res, "response");
+    console.log(res, "response search");
     if (res) {
       setTasks(res);
     }
