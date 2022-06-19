@@ -8,6 +8,22 @@ const getUserDetails = async (id) => {
   return data;
 };
 
+const updateUserDetails = async (user_id, userDetails) => {
+  sanityClient
+    .patch(`${user_id}`)
+    .set({
+      username: userDetails.username,
+      // email: userDetails.email
+    })
+    .commit()
+    .then(updated => {
+      console.log(updated)
+    })
+    .catch(err=> {
+      console.log(err)
+    })
+}
+
 const getUserTasks = async (id) => {
   const data = await sanityClient.fetch(
     `*[_type == 'tasks' && references("${id}") && taskProgress == 'assigned'] {..., user->}[0] `
@@ -37,4 +53,4 @@ const oneUserTask = async (id) => {
   return data;
 };
 
-export { getUserDetails, getUserTasks, allTasks, oneUserTask, filteredTasks };
+export { getUserDetails, updateUserDetails, getUserTasks, allTasks, oneUserTask, filteredTasks };
