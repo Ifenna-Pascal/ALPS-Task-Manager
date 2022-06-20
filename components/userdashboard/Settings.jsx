@@ -1,14 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { updateUserDetails } from "../../store/apicall/userCalls";
 
 export default function Settings() {
+  const { profile } = useSelector(state => state.users)
+  const initialState = {
+    username: "",
+    email: "",
+    firstname: "",
+    lastname: "",
+    contact: "",
+    address: "",
+    userBio: "",
+    dateOfBirth: "",
+    state: "",
+    country: ""
+  };
+  const [updateData, setUpdateData] = useState(initialState);
+
+  const formHandler = (e) => {
+    setUpdateData({ ...updateData, [e.target.name]: e.target.value });
+  }
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log(updateData)
+    // updateUserDetails(profile?._id, updateData);
+  }
   return (
     <div>
       <div>
         <section className="p-3">
           <form
+            onSubmit={handleSubmit}
             noValidate=""
             action=""
-            className=" flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
+            className=" flex flex-col mx-auto space-y-4 md:space-y-12"
           >
             <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm ">
               <div className="space-y-2 col-span-full lg:col-span-1">
@@ -20,9 +47,12 @@ export default function Settings() {
               <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                 <div className="col-span-full sm:col-span-3">
                   <label htmlFor="firstname" className="text-sm">
-                    First name
+                    First Name
                   </label>
                   <input
+                    name="firstname"
+                    value={updateData.firstname}
+                    onChange={(e) => formHandler(e)}
                     id="firstname"
                     type="text"
                     placeholder="First name"
@@ -34,6 +64,9 @@ export default function Settings() {
                     Last name
                   </label>
                   <input
+                    name="lastname"
+                    value={updateData.lastname}
+                    onChange={(e) => formHandler(e)}
                     id="lastname"
                     type="text"
                     placeholder="Last name"
@@ -56,6 +89,9 @@ export default function Settings() {
                     Address
                   </label>
                   <input
+                    name="address"
+                    value={updateData.address}
+                    onChange={(e) => formHandler(e)}
                     id="address"
                     type="text"
                     placeholder=""
@@ -67,6 +103,9 @@ export default function Settings() {
                     City
                   </label>
                   <input
+                    name="city"
+                    value={updateData.state}
+                    onChange={(e) => formHandler(e)}
                     id="city"
                     type="text"
                     placeholder=""
@@ -84,7 +123,7 @@ export default function Settings() {
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-2">
+                {/* <div className="col-span-full sm:col-span-2">
                   <label htmlFor="zip" className="text-sm">
                     ZIP / Postal
                   </label>
@@ -94,10 +133,10 @@ export default function Settings() {
                     placeholder=""
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
-                </div>
+                </div> */}
               </div>
             </fieldset>
-            <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm">
+            <fieldset className="bg-white grid grid-cols-4 gap-6 px-6 md:p-6 rounded-md shadow-sm">
               <div className="space-y-2 col-span-full lg:col-span-1">
                 <p className="font-medium">Profile</p>
                 <p className="text-md text-gray-800">Update your profile status</p>
@@ -108,13 +147,16 @@ export default function Settings() {
                     Username
                   </label>
                   <input
+                    name="username"
+                    value={updateData.username}
+                    onChange={(e) => formHandler(e)}
                     id="username"
                     type="text"
                     placeholder="Username"
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-3">
+                {/* <div className="col-span-full sm:col-span-3">
                   <label htmlFor="website" className="text-sm">
                     Website
                   </label>
@@ -124,43 +166,27 @@ export default function Settings() {
                     placeholder="https://"
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
-                </div>
+                </div> */}
                 <div className="col-span-full">
                   <label htmlFor="bio" className="text-sm">
                     Bio
                   </label>
                   <textarea
                     id="bio"
+                    name="userBio"
+                    value={updateData.userBio}
+                    onChange={(e) => formHandler(e)}
                     placeholder=""
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   ></textarea>
                 </div>
-                {/* <div className="col-span-full">
-                  <label htmlFor="bio" className="text-sm">
-                    Photo
-                  </label>
-                  <div className="flex items-center space-x-2">
-                    <img
-                      src="https://source.unsplash.com/30x30/?random"
-                      alt=""
-                      className="w-10 h-10 rounded-full bg-gray-500 "
-                    />
-                    <button
-                      type="button"
-                      className="px-4 py-2 border rounded-md border-gray-100"
-                    >
-                      Change
-                    </button>
-                  </div>
-                </div> */}
+                <div>
+                </div>
               </div>
             </fieldset>
-            <div className="mb-[400px]">
-              <button className="px-6 py-2 leading-5 text-white transition-colors duration-200 transhtmlForm bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-                Update
-              </button>
-            </div>
-            
+            <button className="px-12 py-2 mb-12 leading-5 text-white transition-colors duration-200 transhtmlForm bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+              Update
+            </button>
           </form>
         </section>
       </div>

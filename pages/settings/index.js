@@ -2,6 +2,10 @@ import React from "react";
 import ChevronIcon from "../../components/icons/Chevron";
 import Link from "next/link";
 import MainLayout from "../../layout/MainLayout";
+import { getSession } from "next-auth/react";
+import { wrapper } from "../../store/store";
+import { loadUser } from "../../util/tokenLoad";
+import { loggedUser } from "../../store/slice/userSlice";
 const settings = [
   {
     title: "Personal Inormation",
@@ -58,3 +62,11 @@ export default function index() {
     </MainLayout>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async ({ req, res }) => {
+    const session = await getSession({ req })
+    const fetchedUser = await loadUser(session?.user?.accessToken);
+    await store.dispatch(loggedUser(fetchedUser));
+  }
+);

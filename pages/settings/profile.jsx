@@ -1,7 +1,12 @@
+import { getSession } from "next-auth/react";
 import React from "react";
 import MainLayout from "../../layout/MainLayout";
+import { loggedUser } from "../../store/slice/userSlice";
+import { wrapper } from "../../store/store";
+import { loadUser } from "../../util/tokenLoad";
 
 export default function ProfileSettings() {
+  
   return (
     <MainLayout>
       <div>
@@ -46,3 +51,11 @@ export default function ProfileSettings() {
     </MainLayout>
   );
 }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async ({ req, res }) => {
+    const session = await getSession({ req })
+    const fetchedUser = await loadUser(session?.user?.accessToken);
+    await store.dispatch(loggedUser(fetchedUser));
+  }
+);
