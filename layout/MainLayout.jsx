@@ -23,10 +23,10 @@ function MainLayout({ children }) {
     }
   }, [session]);
 
-  useEffect(()=> async ()=> {
-    const res = await getUserDetails("f420ddb9-250f-4ccb-9e0e-9152daf87d8a");
-    console.log(res, "testeed test")
-  },[])
+  // useEffect(()=> async ()=> {
+  //   const res = await getUserDetails("f420ddb9-250f-4ccb-9e0e-9152daf87d8a");
+  //   console.log(res, "testeed test")
+  // },[])
 
   return (
     <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full">

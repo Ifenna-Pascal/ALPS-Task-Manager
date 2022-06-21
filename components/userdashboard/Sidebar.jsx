@@ -20,7 +20,7 @@ function Sidebar({ show, closeSidebar }) {
           <SidedashbaordIcon
             path="/"
             classes={
-              router.pathname === "/" || router.pathname === "/editprofile"
+              router.pathname === "/" || router.pathname === "/viewprofile"
                 ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
                 : ""
             }

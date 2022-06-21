@@ -58,11 +58,12 @@ const options = {
       return session;
     },
   },
+  secret: process.env.JWT_SECRET,
   pages: {
     signIn: "auth/signin",
     newUser: "/", // New users will be directed here on first sign in (leave the property out if not of interest)
   },
-  secret: process.env.JWT_SECRET,
+  
 };
 
 export default NextAuth(options);

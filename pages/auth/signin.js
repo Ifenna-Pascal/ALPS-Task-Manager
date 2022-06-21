@@ -85,12 +85,12 @@ export default function Login({ csrfToken }) {
 
 export async function getServerSideProps(context) {
   console.log("processs", process.env.NEXTAUTH_URL)
-  console.log(context, "context");
-  const Context = await getCsrfToken(context);
-  console.log(Context, "Context");
+  // console.log(context, "context");
+  // const Context = await getCsrfToken(await  process.env.NEXTAUTH_URL)
+  // console.log(Context, "Context");
   return {
     props: {
-      csrfToken: Context
+      csrfToken:  await getCsrfToken(context)
     },
   };
 }

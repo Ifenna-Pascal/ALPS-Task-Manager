@@ -6,9 +6,10 @@ import { getSession } from "next-auth/react";
 import { wrapper } from "../../store/store";
 import { loadUser } from "../../util/tokenLoad";
 import { loggedUser } from "../../store/slice/userSlice";
+import { getUserDetails } from "../../store/apicall/userCalls";
 const settings = [
   {
-    title: "Personal Inormation",
+    title: "Personal Information",
     icon: <i className="ri-user-line"></i>,
     link: "/settings/account",
   },
@@ -67,6 +68,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async ({ req, res }) => {
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
-    await store.dispatch(loggedUser(fetchedUser));
+    const result = await getUserDetails(fetchedUser?._id);
+    await store.dispatch(loggedUser(result));
   }
 );

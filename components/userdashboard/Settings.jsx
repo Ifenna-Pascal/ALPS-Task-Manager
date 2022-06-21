@@ -1,31 +1,47 @@
+import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { updateUserDetails } from "../../store/apicall/userCalls";
 
 export default function Settings() {
-  const { profile } = useSelector(state => state.users)
+  const router = useRouter();
+  const { loggedInUser: { _id, userName, origin, userBioData, firstName, lastName, contact, address, dateOfBirth, country } } = useSelector(state => state.users)
+  // console.log(loggedInUser, "profile")
   const initialState = {
-    username: "",
-    email: "",
-    firstname: "",
-    lastname: "",
-    contact: "",
-    address: "",
-    userBio: "",
-    dateOfBirth: "",
-    state: "",
-    country: ""
+    userName: userName ? userName : "",
+    firstName: firstName ? firstName : "",
+    lastName: lastName ? lastName : "",
+    contact: contact ? contact : "",
+    address: address ? address : "",
+    userBioData: userBioData ? userBioData : "",
+    dateOfBirth: dateOfBirth ? dateOfBirth : "",
+    origin: origin ? origin : "",
+    country: country ? country : "",
   };
   const [updateData, setUpdateData] = useState(initialState);
-
+  const [loading, setLoading] = useState(false);
   const formHandler = (e) => {
     setUpdateData({ ...updateData, [e.target.name]: e.target.value });
   }
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
+    setLoading(true);
     console.log(updateData)
-    // updateUserDetails(profile?._id, updateData);
+    try {
+      const result = await updateUserDetails(_id, updateData);
+      if (result) {
+        setLoading(false);
+        router.push('/viewprofile');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  {
+    loading && <div className="w-screen flex items-center justify-center h-screen">
+      <div className="w-full h-full w-[60px] h-[60px] rounded-full p-8 bg-blue-500 animate-ping" />
+    </div>
   }
   return (
     <div>
@@ -50,8 +66,8 @@ export default function Settings() {
                     First Name
                   </label>
                   <input
-                    name="firstname"
-                    value={updateData.firstname}
+                    name="firstName"
+                    value={updateData.firstName}
                     onChange={(e) => formHandler(e)}
                     id="firstname"
                     type="text"
@@ -61,11 +77,11 @@ export default function Settings() {
                 </div>
                 <div className="col-span-full sm:col-span-3">
                   <label htmlFor="lastname" className="text-sm">
-                    Last name
+                    Last Name
                   </label>
                   <input
-                    name="lastname"
-                    value={updateData.lastname}
+                    name="lastName"
+                    value={updateData.lastName}
                     onChange={(e) => formHandler(e)}
                     id="lastname"
                     type="text"
@@ -84,7 +100,7 @@ export default function Settings() {
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div> */}
-                <div className="col-span-full">
+                <div className="col-span-full sm:col-span-3">
                   <label htmlFor="address" className="text-sm">
                     Address
                   </label>
@@ -98,26 +114,29 @@ export default function Settings() {
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-2">
-                  <label htmlFor="city" className="text-sm">
-                    City
+                <div className="col-span-full sm:col-span-3">
+                  <label htmlFor="origin" className="text-sm">
+                    State Of Origin
                   </label>
                   <input
-                    name="city"
-                    value={updateData.state}
+                    name="origin"
+                    value={updateData.origin}
                     onChange={(e) => formHandler(e)}
-                    id="city"
+                    id="origin"
                     type="text"
                     placeholder=""
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
-                <div className="col-span-full sm:col-span-2">
+                <div className="col-span-full">
                   <label htmlFor="state" className="text-sm">
-                    State / Province
+                    Country
                   </label>
                   <input
                     id="state"
+                    name="country"
+                    value={updateData.country}
+                    onChange={(e) => formHandler(e)}
                     type="text"
                     placeholder=""
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
@@ -147,12 +166,26 @@ export default function Settings() {
                     Username
                   </label>
                   <input
-                    name="username"
-                    value={updateData.username}
+                    name="userName"
+                    value={updateData.userName}
                     onChange={(e) => formHandler(e)}
                     id="username"
                     type="text"
                     placeholder="Username"
+                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                  />
+                </div>
+                <div className="col-span-full sm:col-span-3">
+                  <label htmlFor="dateofbirth" className="text-sm">
+                    Date Of Birth
+                  </label>
+                  <input
+                    name="dateOfBirth"
+                    value={updateData.dateOfBirth}
+                    onChange={(e) => formHandler(e)}
+                    id="dateOfBirth"
+                    type="date"
+                    // placeholder="Username"
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"
                   />
                 </div>
@@ -173,8 +206,8 @@ export default function Settings() {
                   </label>
                   <textarea
                     id="bio"
-                    name="userBio"
-                    value={updateData.userBio}
+                    name="userBioData"
+                    value={updateData.userBioData}
                     onChange={(e) => formHandler(e)}
                     placeholder=""
                     className="w-full p-3 rounded-md bg-[#F7F6F4]"

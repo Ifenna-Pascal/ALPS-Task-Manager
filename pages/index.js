@@ -30,12 +30,11 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const session = await getSession({req})
     console.log('sessionss');
     const fetchedUser = await loadUser(session?.user?.accessToken);
-    console.log(session, "Sessionsss");
     const result = await getUserDetails(fetchedUser?._id);
     const currentTask = await getUserTasks(fetchedUser?._id);
     const allTask = await allTasks(fetchedUser?._id);
     await store.dispatch(filterTasks(allTask));
-    await store.dispatch(loggedUser(fetchedUser));
+    await store.dispatch(loggedUser(result));
     await store.dispatch(userDetails(result));
     await store.dispatch(addCurrentTask(currentTask));
   }

@@ -8,21 +8,36 @@ const getUserDetails = async (id) => {
   return data;
 };
 
-const updateUserDetails = async (user_id, userDetails) => {
-  sanityClient
-    .patch(`${user_id}`)
-    .set({
-      username: userDetails.userName,
-      // email: userDetails.email
-    })
-    .commit()
-    .then(updated => {
-      console.log(updated)
-    })
-    .catch(err=> {
-      console.log(err)
-    })
-}
+const updateUserDetails = async (
+  user_id,
+  {
+    userName,
+    firstName,
+    lastName,
+    contact,
+    address,
+    userBioData,
+    dateOfBirth,
+    country,
+    origin
+  }
+) => {
+ const data =  sanityClient
+ .patch(`${user_id}`)
+ .set({
+   userName,
+   firstName,
+   lastName,
+   contact,
+   address,
+   userBioData,
+   dateOfBirth,
+   country,
+   origin
+ })
+ .commit()
+   return data;
+};
 
 const getUserTasks = async (id) => {
   const data = await sanityClient.fetch(
@@ -53,4 +68,11 @@ const oneUserTask = async (id) => {
   return data;
 };
 
-export { getUserDetails, updateUserDetails, getUserTasks, allTasks, oneUserTask, filteredTasks };
+export {
+  getUserDetails,
+  updateUserDetails,
+  getUserTasks,
+  allTasks,
+  oneUserTask,
+  filteredTasks,
+};

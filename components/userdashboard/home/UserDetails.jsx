@@ -1,9 +1,10 @@
-import React from "react";
+import {useState} from "react";
 import { useSelector } from 'react-redux';
 
 
 function UserDetails() {
   const { profile } = useSelector(state => state.users)
+  const [show, setShow] = useState(false);
   const IMAGE = profile?.headerUrl ? profile.headerUrl : '/project.png';
   return (
     <div className="w-full h-full bg-white  relative ">
@@ -47,11 +48,11 @@ function UserDetails() {
               <span className="mb-2 text-base block  text-gray-500">
                  {profile && profile.email}
               </span>
-              <span className="mb-2 text-base block  text-gray-500">
-                ********* <i className="ri-eye-line ml-4"></i>
+              <span className="mb-2 text-sm block  text-gray-500">
+                {profile && show ? profile.password : "XXXXXXXX"} <i className="ri-eye-line ml-1" onClick={() => setShow(!show)}></i>
               </span>
               <span className="mb-2 text-base block  text-gray-500">
-                11 Ani Street Enugu
+                {profile && profile.address}
               </span>
               <span className="text-base block  text-gray-500">
                 +234675344443
@@ -78,10 +79,10 @@ function UserDetails() {
             <div>
               <span className="mb-2 text-base block  text-gray-500">Male</span>
               <span className="mb-2 text-base block  text-gray-500">
-                Anambra
+              {profile && profile.origin ? profile.origin : 'nill' }
               </span>
               <span className="mb-2 text-base block  text-gray-500">
-               {profile && profile.dateOfBirth}
+               {profile && profile.dateOfBirth ? profile.dateOfBirth : 'nill' }
               </span>
             </div>
           </div>
