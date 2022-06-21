@@ -217,9 +217,11 @@ export default function Settings() {
                 </div>
               </div>
             </fieldset>
-            <button className="px-12 py-2 mb-12 leading-5 text-white transition-colors duration-200 transhtmlForm bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-              Update
-            </button>
+            <div className="px-6 py-2 ">
+              <button className="px-12 py-2 mb-16 leading-5 text-white transition-colors duration-200  bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
+                Update
+              </button>
+            </div>
           </form>
         </section>
       </div>

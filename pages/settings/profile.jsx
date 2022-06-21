@@ -64,7 +64,7 @@ export default function ProfileSettings() {
 
                 <div className="relative  w-full md:w-[30%] mx-auto">
                   <div className="bg-[#F7F6F4] rounded-full  w-48 h-48 mx-auto">
-                    <img className="rounded-lg" src={img} alt="profile_img" className="rounded-full w-full h-full" />
+                    <img  src={img} alt="profile_img" className="rounded-full w-full h-full" />
                   </div>
                   <div className="flex justify-center absolute inset-x-7 top-[9.8rem] ">
                     <label
