@@ -1,5 +1,6 @@
 import sanityClient from "./sanityInit";
-
+import { basename } from "path";
+// import { createReadStream } from "fs";
 const getUserDetails = async (id) => {
   const data = await sanityClient.fetch(
     `*[_type == 'user' && _id == "${id}"]{..., "imageUrl": userImage.asset->url, "headerUrl": headerImage.asset->url}[0]`
@@ -19,24 +20,48 @@ const updateUserDetails = async (
     userBioData,
     dateOfBirth,
     country,
-    origin
+    origin,
   }
 ) => {
- const data =  sanityClient
- .patch(`${user_id}`)
- .set({
-   userName,
-   firstName,
-   lastName,
-   contact,
-   address,
-   userBioData,
-   dateOfBirth,
-   country,
-   origin
- })
- .commit()
-   return data;
+  const data = sanityClient
+    .patch(`${user_id}`)
+    .set({
+      userName,
+      firstName,
+      lastName,
+      contact,
+      address,
+      userBioData,
+      dateOfBirth,
+      country,
+      origin,
+    })
+    .commit();
+  return data;
+};
+
+const uploadImage = async (userId, filePath) => {
+  const data = sanityClient.assets
+    .upload("image", createReadStream(filePath), {
+      filename: basename(filePath),
+    })
+    .then((imageAsset) => {
+      // Here you can decide what to do with the returned asset document.
+      // If you want to set a specific asset field you can to the following:
+      return client
+        .patch(`${userId}`)
+        .set({
+          userImage: {
+            _type: "image",
+            asset: {
+              _type: "reference",
+              _ref: imageAsset._id,
+            },
+          },
+        })
+        .commit();
+    });
+  return data;
 };
 
 const getUserTasks = async (id) => {
@@ -74,5 +99,6 @@ export {
   getUserTasks,
   allTasks,
   oneUserTask,
+  uploadImage,
   filteredTasks,
 };
