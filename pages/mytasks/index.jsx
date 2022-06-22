@@ -3,7 +3,7 @@ import CompletedTask from "../../components/userdashboard/tasks/CompletedTask";
 import InProgress from "../../components/userdashboard/tasks/InProgress";
 import PendingTask from "../../components/userdashboard/tasks/PendingTask";
 import MainLayout from "../../layout/MainLayout";
-import { allTasks } from "../../store/apicall/userCalls";
+import { allTasks, getUserDetails } from "../../store/apicall/userCalls";
 import { filterTasks, loggedUser } from "../../store/slice/userSlice";
 import { wrapper } from "../../store/store";
 import { getSession } from 'next-auth/react';
@@ -34,7 +34,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
     const allTask = await allTasks(fetchedUser?._id);
-    await store.dispatch(loggedUser(fetchedUser));
+    const result = await getUserDetails(fetchedUser?._id);
+    await store.dispatch(loggedUser(result));
     await store.dispatch(filterTasks(allTask));
   }
 );

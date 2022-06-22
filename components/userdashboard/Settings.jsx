@@ -2,11 +2,10 @@ import { useRouter } from "next/router";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { updateUserDetails } from "../../store/apicall/userCalls";
+import { toast } from 'react-toastify';
 
 export default function Settings() {
-  const router = useRouter();
-  const { loggedInUser: { _id, userName, origin, userBioData, firstName, lastName, contact, address, dateOfBirth, country } } = useSelector(state => state.users)
-  // console.log(loggedInUser, "profile")
+  const { loggedInUser: { _id, userName, origin, userBioData, firstName, lastName, contact, address, dateOfBirth, country } } = useSelector(state => state.users);
   const initialState = {
     userName: userName ? userName : "",
     firstName: firstName ? firstName : "",
@@ -27,22 +26,17 @@ export default function Settings() {
   const handleSubmit = async e => {
     e.preventDefault();
     setLoading(true);
-    console.log(updateData)
     try {
       const result = await updateUserDetails(_id, updateData);
       if (result) {
         setLoading(false);
-        router.push('/viewprofile');
+        toast.success("Profile Updated")
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Error updating profile")
     }
   }
-  {
-    loading && <div className="w-screen flex items-center justify-center h-screen">
-      <div className="w-full h-full w-[60px] h-[60px] rounded-full p-8 bg-blue-500 animate-ping" />
-    </div>
-  }
+  
   return (
     <div>
       <div>
@@ -219,7 +213,7 @@ export default function Settings() {
             </fieldset>
             <div className="px-6 py-2 ">
               <button className="px-12 py-2 mb-16 leading-5 text-white transition-colors duration-200  bg-blue-500 rounded-md hover:bg-gray-600 focus:outline-none focus:bg-gray-600">
-                Update Profile
+                {loading ? "Updating..." : "Update Profile"}
               </button>
             </div>
           </form>

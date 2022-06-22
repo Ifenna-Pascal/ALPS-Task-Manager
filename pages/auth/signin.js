@@ -1,45 +1,53 @@
-import React, { useState } from "react";
-import { signIn, getCsrfToken } from "next-auth/react";
+import React, { useState, useEffect } from "react";
+import { signIn, getCsrfToken, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 export default function Login({ csrfToken }) {
+  const session = useSession();
   const router = useRouter();
+  const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState({
     email: "",
     password: "",
   });
-  const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (session.status === "authenticated") {
+      router.push("/");
+    }
+  }, []);
+
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
   };
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const res = await signIn("credentials", {
       redirect: false,
       email: userData.email,
       password: userData.password,
       callbackUrl: `${window.location.origin}`,
     });
-    console.log(res);
     if (res?.error) {
-      setError(res.error);
-    } else {
-      setError(null);
+      setLoading(false);
+      toast.error(res.error);
     }
-    if (res.url) router.push(res.url);
+    if (res.url) {
+      setLoading(false);
+      toast.success("sgined in successfully");
+      router.push(res.url);
+    }
   };
   return (
     <div>
       <div className="relative flex flex-col justify-center mx-3 min-h-screen overflow-hidden">
-        <div className="w-full p-6 m-auto bg-white border-t shadow-lg lg:max-w-md">
+        <div className="w-full p-6 m-auto bg-white border-t  lg:max-w-md">
           <h1 className="text-3xl font-semibold text-center text-blue-700">
             ALPS
           </h1>
-          {error && (
-            <div className="w-full bg-red-400 text-center py-1 text-white">
-              {error}
-            </div>
-          )}
           <form className="mt-6" onSubmit={handleLogin}>
             <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
             <div>
@@ -56,23 +64,37 @@ export default function Login({ csrfToken }) {
             </div>
             <div className="mt-4">
               <div>
-                <label htmlFor="password" className="block text-sm text-gray-800">
+                <label
+                  htmlFor="password"
+                  className="block text-sm text-gray-800"
+                >
                   Password
                 </label>
+                <div className="relative">
+              <div
+                className="absolute right-0 inset-y-0 flex items-center justify-center pr-3"
+                onClick={() => setShow(!show)}
+              >
+                {" "}
+                <i className={`${show ? "ri-eye-off-line" : "ri-eye-line"} ml-4`}></i>
+              </div>
                 <input
                   value={userData.password}
                   onChange={handleChange}
                   name="password"
-                  type="password"
+                  type={show ? "text" : "password"}
                   className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 />
               </div>
+          
               <a href="#" className="text-xs text-gray-600 hover:underline">
                 Forget Password?
               </a>
+              </div>
+  
               <div className="mt-6">
                 <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
-                  Login
+                  {loading ? "Processing..." : "Login"}
                 </button>
               </div>
             </div>
@@ -84,13 +106,9 @@ export default function Login({ csrfToken }) {
 }
 
 export async function getServerSideProps(context) {
-  console.log("processs", process.env.NEXTAUTH_URL)
-  // console.log(context, "context");
-  // const Context = await getCsrfToken(await  process.env.NEXTAUTH_URL)
-  // console.log(Context, "Context");
   return {
     props: {
-      csrfToken:  await getCsrfToken(context)
+      csrfToken: await getCsrfToken(context),
     },
   };
 }

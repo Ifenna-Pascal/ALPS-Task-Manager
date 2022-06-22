@@ -1,46 +1,41 @@
 import { getSession } from "next-auth/react";
 import { useState } from "react";
+import { toast } from 'react-toastify';
 import MainLayout from "../../layout/MainLayout";
 import { getUserDetails, uploadImage } from "../../store/apicall/userCalls";
 import { loggedUser } from "../../store/slice/userSlice";
 import { wrapper } from "../../store/store";
 import { loadUser } from "../../util/tokenLoad";
 import { useSelector } from "react-redux";
+import axios from 'axios';
 
 export default function ProfileSettings() {
   const { loggedInUser: { _id, imageUrl } } = useSelector(state => state.users);
   const [img, setImg] = useState(imageUrl && imageUrl);
   const [loading, setLoading] = useState(false);
-  const [upload, setUpload] = useState(false);
+  const [filepath, setFilePath] = useState('');
   const handleUpload = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
       setImg(URL.createObjectURL(img));
-      setUpload(true);
-    }
-    else {
-      console.log('not')
+      setFilePath(event.target.files[0]);
     }
   }
   const submitImage = async (e) => {
     e.preventDefault();
-    console.log('res');
     setLoading(true);
     try {
-      const result = await uploadImage(_id, img);
+      const body = new FormData();
+      body.append("file", filepath);
+      body.append("_id", _id);
+      const result = await axios.post('/api/sanity/upload', body)
       if (result) {
-        console.log(result);
         setLoading(false);
-        router.push('/viewprofile');
+        toast.success("Profile Picture Updated!")
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Error Updating Profle Picture")
     }
-  }
-  {
-    loading && <div className="w-screen flex items-center justify-center h-screen">
-      <div className="w-full h-full w-[60px] h-[60px] rounded-full p-8 bg-blue-500 animate-ping" />
-    </div>
   }
   return (
     <MainLayout>
@@ -51,12 +46,13 @@ export default function ProfileSettings() {
               Settings
             </p>
             <form
+              encType="multipart/form-data"
               onSubmit={submitImage}
               className="container flex flex-col mx-auto space-y-12 ng-untouched ng-pristine ng-valid"
             >
               <fieldset className="py-6 rounded-md shadow-sm bg-white lg:px-24 pt-10 pb-10">
                 <div className="space-y-2 col-span-full mb-8">
-                  <p className="font-medium">Profile Settings</p>
+                  <p className="font-medium text-lg">Profile Settings</p>
                   <p className="text-base text-gray-800">
                     Change your profile picture display
                   </p>
@@ -64,7 +60,7 @@ export default function ProfileSettings() {
 
                 <div className="relative  w-full md:w-[30%] mx-auto">
                   <div className="bg-[#F7F6F4] rounded-full  w-48 h-48 mx-auto">
-                    <img  src={img} alt="profile_img" className="rounded-full w-full h-full" />
+                    <img src={img} alt="profile_img" className="rounded-full w-full h-full" />
                   </div>
                   <div className="flex justify-center absolute inset-x-7 top-[9.8rem] ">
                     <label
@@ -73,12 +69,10 @@ export default function ProfileSettings() {
                     >
                       <i className="ri-camera-switch-line text-2xl"></i>
                     </label>
-                    {!upload ? <input id="image" type="file" className="mx-auto hidden" onChange={handleUpload} /> :
-                      <button className="mx-auto hidden" />}
+                    <input id="image" type="file" name="file" className="mx-auto hidden" onChange={handleUpload} />
                   </div>
                 </div>
-
-                {/* <button  >change</button> */}
+                <button className="bg-[#247bf4] py-2 px-12 rounded-md text-white text-base">{loading ? "Processing" : "Update"}</button>
               </fieldset>
             </form>
           </section>
