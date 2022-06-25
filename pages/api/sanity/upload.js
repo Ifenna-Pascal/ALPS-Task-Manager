@@ -7,7 +7,7 @@ const client = sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: process.env.DATA_SET,
   useCdn: true,
-  token: process.env.SANITY_AUTH_TOKEN
+  token: process.env.SANITY_AUTH_TOKEN,
 });
 
 export const config = {
@@ -20,7 +20,7 @@ const handler = nc();
 
 let storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, __dirname);
+    cb(null, path.join(__dirname, '../public/images'));
   },
   filename: function (req, file, cb) {
     cb(
