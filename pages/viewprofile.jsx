@@ -26,7 +26,7 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
     const result = await getUserDetails(fetchedUser?._id);
-    await store.dispatch(loggedUser(fetchedUser));
+    await store.dispatch(loggedUser(result));
     await store.dispatch(userDetails(result));
   }
 );

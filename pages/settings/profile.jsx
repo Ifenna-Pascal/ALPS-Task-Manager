@@ -34,6 +34,7 @@ export default function ProfileSettings() {
         toast.success("Profile Picture Updated!")
       }
     } catch (error) {
+      console.log(error)
       toast.error("Error Updating Profle Picture")
     }
   }

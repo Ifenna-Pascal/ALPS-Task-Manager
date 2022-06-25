@@ -1,9 +1,11 @@
 import React from "react";
 import Link from 'next/link';
+import { useRouter } from "next/router";
 
 function Taskcard({ header, content, deadline, duration, id }) {
+  const router = useRouter();
   return (
-    <div className="w-full py-6 px-4 flex flex-col bg-gray-200  mb-4  rounded-md ">
+    <div className="w-full py-6 px-4 flex flex-col bg-gray-200  mb-4  rounded-md " onClick={() => router.push(`/mytasks/${id}`)}>
       <div className="flex justify-between items-center">
         <span className="text-gray-900 font-Roboto leading-[19px] text-base">
           {header}

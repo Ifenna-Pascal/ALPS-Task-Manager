@@ -7,7 +7,7 @@ import Progress from "./Progress";
 function CurrentTask({ header, content, deadline, type, duration, home, id }) {
   const router = useRouter();
   return (
-    <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8">
+    <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={() => router.push(`/mytasks/${id}`)}>
       <div className="flex justify-between">
         <TaskHeading
           color="bg-blue-400"
