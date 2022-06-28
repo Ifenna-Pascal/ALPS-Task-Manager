@@ -2,12 +2,13 @@ import PieChart from "./Chart";
 import CurrentTask from "./CurrentTask";
 import Messages from "./Messages";
 import User from "./User";
+import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
 import EmptyState from "../../EmptyState";
 
 function Dashboard() {
   const { currentTask, pendingTask, completedTask, inProgressTask } = useSelector((state) => state.users);
-
+  const router = useRouter();
   return (
     <div className="lg:my-8 grid grid-cols-1 lg:grid-cols-7  lg:h-[calc(100vh-7rem)] lg:grid-rows-5 gap-y-8 lg:gap-8">
       <div className="lg:col-span-3 h-[300px]  col-span-1 lg:row-span-2">
@@ -25,8 +26,8 @@ function Dashboard() {
                 ? currentTask.taskDescription?.slice(0, 300) + "..."
                 : "..."
             }
-            id={currentTask && currentTask._id}
             home
+            click={() => router.push(`/mytasks/${currentTask._id}`)}
           /> : <EmptyState msg="No Current Task" />
         }
       </div>

@@ -3,7 +3,6 @@ import path from "path";
 import formidable from 'formidable'
 import { createReadStream } from "fs";
 import nc from "next-connect";
-// import multer from "multer";
 const client = sanityClient({
   projectId: process.env.PROJECT_ID,
   dataset: process.env.DATA_SET,
@@ -18,25 +17,6 @@ export const config = {
 };
 
 const handler = nc();
-
-// let storage = multer.diskStorage({
-//   destination: function (req, file, cb) {
-//     cb(null, path.join(__dirname, '../public/images'));
-//   },
-//   filename: function (req, file, cb) {
-//     cb(
-//       null,
-//       file.fieldname + "-" + Date.now() + path.extname(file.originalname)
-//     );
-//   },
-// });
-
-// let upload = multer({
-//   storage: storage,
-// });
-
-// let uploadFile = upload.single("file");
-// handler.use(uploadFile);
 handler.post(async (req, res) => {
   try {
     const form = new formidable.IncomingForm();

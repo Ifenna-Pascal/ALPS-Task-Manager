@@ -1,13 +1,12 @@
 import Link from "next/link";
-import { useRouter } from "next/router";
+
 import React from "react";
 import TaskHeading from "../tasks/TaskHeading";
 import Progress from "./Progress";
 
-function CurrentTask({ header, content, deadline, type, duration, home, id }) {
-  const router = useRouter();
+function CurrentTask({ header, content, deadline, type, duration, home, click= () => {} }) {
   return (
-    <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={() => router.push(`/mytasks/${id}`)}>
+    <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={click}>
       <div className="flex justify-between">
         <TaskHeading
           color="bg-blue-400"
@@ -16,7 +15,7 @@ function CurrentTask({ header, content, deadline, type, duration, home, id }) {
           } Task`}
         />
         {home && (
-          <span onClick={() => router.push(`/mytasks/${id}`)}>
+          <span>
             <a>
               <i className="ri-more-2-line"></i>
             </a>

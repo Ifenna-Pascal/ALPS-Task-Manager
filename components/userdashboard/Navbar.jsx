@@ -34,6 +34,7 @@ const Display = ({ children, type, ...rest }) => {
 function Navbar() {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
+  console.log(search && `${search} searching.....................`)
   const { loggedInUser } = useSelector(state => state.users);
   useEffect(() => async () => {
     console.log(loggedInUser, "usersss");
@@ -240,7 +241,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      {
+      { 
         search && <div className="bg-gray-200 duration-300 relative mt-2  py-3 px-6">
           {
             tasks && tasks.length === 0 && <div className="text-left w-full text-base font-Roboto"> NO TASKS FOUND </div>

@@ -23,6 +23,7 @@ export default function ProfileSettings() {
   }
   const submitImage = async (e) => {
     e.preventDefault();
+    if (!filepath) return toast.error('Kindly Select An Image')
     setLoading(true);
     try {
       const body = new FormData();
@@ -74,7 +75,9 @@ export default function ProfileSettings() {
                     <input id="image" type="file" name="file" className="mx-auto hidden" onChange={handleUpload} />
                   </div>
                 </div>
-                <button className="bg-[#247bf4] py-2 px-12 rounded-md text-white text-base">{loading ? "Processing" : "Update"}</button>
+                <div className="flex items-center w-full justify-center mt-8">
+                  <button className="bg-[#247bf4] py-2 mt-4  px-12 rounded-md text-white text-base">{loading ? "Processing..." : "Update"}</button>
+                </div>
               </fieldset>
             </form>
           </section>
