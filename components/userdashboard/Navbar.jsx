@@ -35,8 +35,6 @@ const Display = ({ children, type, ...rest }) => {
 function Navbar() {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
-  console.log(tasks, 'Tasks.........................')
-  console.log(search && `${search} searching.....................`)
   const { loggedInUser } = useSelector(state => state.users);
   useEffect(() => {
     const fetchData = async () => {
