@@ -4,6 +4,7 @@ import "remixicon/fonts/remixicon.css";
 import { signOut } from "next-auth/react"
 import { allTasks } from '../../store/apicall/userCalls';
 import { useSelector } from "react-redux";
+import { toast } from "react-toastify";
 
 const Display = ({ children, type, ...rest }) => {
   const { loggedInUser } = useSelector(state => state.users);
@@ -14,7 +15,7 @@ const Display = ({ children, type, ...rest }) => {
         {type === "profile" ? (
           loggedInUser?.imageUrl ? <img
             className="object-cover  rounded-full h-8 w-8"
-            src= {loggedInUser?.imageUrl}
+            src={loggedInUser?.imageUrl}
             alt="avatar"
           /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
         ) : (
@@ -37,13 +38,15 @@ function Navbar() {
   console.log(tasks, 'Tasks.........................')
   console.log(search && `${search} searching.....................`)
   const { loggedInUser } = useSelector(state => state.users);
-  useEffect(() => async () => {
-    console.log(loggedInUser, "usersss");
-    const res = await allTasks(loggedInUser?._id);
-    console.log(res, "response search");
-    if (res) {
-      setTasks(res);
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await allTasks(loggedInUser?._id);
+      setTasks(res && res);
     }
+    fetchData().catch(err => {
+      console.log(err);
+      toast.error('Error fetching tasks');
+    });
   }, [])
   const handleSearch = async (searched) => {
     setSearch(searched);
@@ -242,13 +245,13 @@ function Navbar() {
           </div>
         </div>
       </div>
-      { 
+      {
         search && <div className="bg-gray-200 duration-300 relative mt-2  py-3 px-6">
           {
             tasks && tasks.length === 0 && <div className="text-left w-full text-base font-Roboto"> NO TASKS FOUND </div>
           }
           {
-            tasks &&  tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="text-left w-full text-base font-Roboto"> NO MATCH </div>
+            tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="text-left w-full text-base font-Roboto"> NO MATCH </div>
           }
           {
             tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
