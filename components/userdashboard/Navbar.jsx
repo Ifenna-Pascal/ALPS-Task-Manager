@@ -5,6 +5,7 @@ import { signOut } from "next-auth/react"
 import { allTasks } from '../../store/apicall/userCalls';
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import ThemeButton from "../../layout/ThemeButton";
 
 const Display = ({ children, type, ...rest }) => {
   const { loggedInUser } = useSelector(state => state.users);
@@ -19,7 +20,7 @@ const Display = ({ children, type, ...rest }) => {
             alt="avatar"
           /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
         ) : (
-          <div className="flex items-center relative text-[#6B6D72] text-2xl">
+          <div className="flex items-center relative text-[#6B6D72] dark:text-gray-400 text-2xl">
             <span {...rest}></span>
             <i className={type}></i>
           </div>
@@ -51,7 +52,7 @@ function Navbar() {
   }
   return (
     <>
-      <div className="h-16 md:h-12 flex py-2 px-4 fixed md:sticky z-50 md:z-10 bottom-0  bg-gray-300 md:top-[2rem] w-full md:w-full mx-auto md:bg-white rounded-t-2xl  md:rounded-xl shadow-sm ">
+      <div className="h-16 md:h-12 flex py-2 px-4 fixed md:sticky z-50 md:z-10 bottom-0 dark:bg-[#1F2937] bg-gray-300 md:top-[2rem] w-full md:w-full mx-auto md:bg-white rounded-t-2xl  md:rounded-xl shadow-sm ">
         <div className="flex items-center  w-full justify-between">
           <div className="relative w-[30%] md:flex hidden  items-center">
             <span className="absolute inset-y-0 left-0 flex items-center pl-3">
@@ -72,13 +73,14 @@ function Navbar() {
 
             <input
               type="text"
-              className="w-full  pl-8 py-[0.35rem] text-gray-700 bg-[#F7F6F4]   rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 rounded-2xl focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-100 focus:ring-opacity-40 text-[10px] focus:outline-none focus:ring"
+              className="w-full  pl-8 py-[0.35rem] text-gray-700  bg-[#F7F6F4]   rounded-md dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 rounded-2xl focus:border-blue-400 dark:focus:border-blue-300 focus:ring-blue-100 focus:ring-opacity-40 text-[10px] focus:outline-none focus:ring"
               placeholder="search by task name..."
               value={search}
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
           <div className="flex justify-between items-center md:w-[20%] w-[90%] mx-auto md:mx-0">
+            <ThemeButton />
             <Display
               type="ri-chat-1-line"
               className="p-1 bg-blue-500 absolute right-[0.1rem] top-1  rounded-full"

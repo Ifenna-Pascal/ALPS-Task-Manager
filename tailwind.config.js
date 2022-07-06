@@ -4,7 +4,7 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
     "./layout/**/*.{js,ts,jsx,tsx}",
   ],
-
+  darkMode: 'class',
   theme: {
     fontFamily: {
       Roboto: ["Roboto", "sans-serif"],
