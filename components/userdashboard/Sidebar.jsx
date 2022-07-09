@@ -2,24 +2,30 @@ import React from "react";
 import sideBarIcon from "../../util/sidebar";
 import SidedashbaordIcon from "./SidedashbaordIcon";
 import { useRouter } from "next/router";
+// import useDarkMode from "../../util/useDarkMode";
 
 function Sidebar({ show, closeSidebar }) {
   const router = useRouter();
+  // const [colorTheme, setTheme] = useDarkMode();
+  // console.log(colorTheme)
   return (
     <div
       className={`${show ? "w-screen h-screen fixed z-50 bg-[rgba(0,0,0,0.3)]" : "fixed"
         } duration-300 md:block`} onClick={() => closeSidebar(false)}
     >
       <div
-        className={`fixed h-screen w-[218px] duration-300 z-50 ${show ? "translate-x-0" : "-translate-x-[100%]"
+        className={`fixed dark:bg-[#1F2937] h-screen w-[218px] duration-300 z-50 ${show ? "translate-x-0" : "-translate-x-[100%]"
           } md:translate-x-0  bg-white flex_1 lg:rounded-xl shadow-md`}
       >
+         {/* {
+        colorTheme === "light" ? <button onClick={() => SetTheme('dark')} className="bg-blue-500">Dark</button> : <button className="bg-blue-400" onClick={() => setTheme('light')}>Light</button>
+      } */}
         <div className="mt-32 flex flex-col pl-8 ">
           <SidedashbaordIcon
             path="/"
             classes={
               router.pathname === "/" || router.pathname === "/viewprofile"
-                ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
                 : ""
             }
             class_text={
@@ -36,7 +42,7 @@ function Sidebar({ show, closeSidebar }) {
             classes={
               router.pathname === "/mytasks" ||
                 /\/mytasks\/\D+/.test(router.pathname)
-                ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
                 : ""
             }
             class_text={
@@ -53,7 +59,7 @@ function Sidebar({ show, closeSidebar }) {
             path="/"
             classes={
               router.pathname === "/logs"
-                ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
                 : ""
             }
             class_text={router.pathname === "/logs" ? "text-[#0a51b6] " : ""}
@@ -65,7 +71,7 @@ function Sidebar({ show, closeSidebar }) {
             path="/settings"
             classes={
               router.pathname === "/settings" || /\/settings\/\w+/.test(router.pathname)
-                ? "bg-gradient-to-r from-white to-[#a4bcdf] border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
                 : ""
             }
             class_text={
@@ -77,6 +83,7 @@ function Sidebar({ show, closeSidebar }) {
           />
         </div>
       </div>
+     
     </div>
   );
 }

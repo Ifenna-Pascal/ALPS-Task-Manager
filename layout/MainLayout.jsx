@@ -14,7 +14,7 @@ function MainLayout({ children }) {
     }
   }, [session]);
   return (
-    <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full">
+    <div className="md:bg-[#F7F6F4] md:p-8 flex gap-x-12 h-screen md:h-full w-full dark:bg-[#111827]">
       <Sidebar closeSidebar={setShow} show={show} />
       <div className="w-full h-full  md:ml-[250px]">
         <Navbar />

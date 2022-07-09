@@ -17,10 +17,10 @@ function User() {
 
       </div>
       <div className="flex flex-col h-[65%] items-center justify-center">
-        <span className="font-bold text-gray-800 font-Roboto text-xl">
+        <span className="font-bold text-gray-800 dark:text-white font-Roboto text-xl">
           {profile && profile.userName}
         </span>
-        <span className="text-gray-500 text-lg font-Poppins">
+        <span className="text-gray-500 dark:text-gray-300 text-lg font-Poppins">
           Backend Developer{" "}
         </span>
       </div>

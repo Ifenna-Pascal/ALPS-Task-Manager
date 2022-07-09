@@ -6,7 +6,7 @@ import Progress from "./Progress";
 
 function CurrentTask({ header, content, deadline, type, duration, home, click= () => {} }) {
   return (
-    <div className="bg-white flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={click}>
+    <div className="bg-white dark:bg-[#1F2937] flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={click}>
       <div className="flex justify-between">
         <TaskHeading
           color="bg-blue-400"
@@ -23,16 +23,16 @@ function CurrentTask({ header, content, deadline, type, duration, home, click= (
         )}
       </div>
       <div className="flex flex-col">
-        <span className="font-Roboto capitalize  text-gray-700 text-2xl font-semibold">
+        <span className="font-Roboto capitalize dark:text-white text-gray-700 text-2xl font-semibold">
           {header}
         </span>
         <div className="mt-3">
-          <span className="block text-gray-400 mb-1 font-Poppins font-semibold">
+          <span className="block dark:text-gray-300 text-gray-400 mb-1 font-Poppins font-semibold">
             20% completion
           </span>
           <Progress maxCompleted={20} completed={10} />
         </div>
-        <span className="font-Poppins my-4 text-gray-400 text-base">
+        <span className="font-Poppins my-4 dark:text-gray-300 text-gray-400 text-base">
           {content}
         </span>
       </div>
@@ -42,10 +42,10 @@ function CurrentTask({ header, content, deadline, type, duration, home, click= (
             <i className="ri-calendar-todo-line"></i>
           </div>
           <div className="flex items-center">
-            <span className="text-gray-600 font-semibold text-lg mr-1 block text-[1rem]">
+            <span className="text-gray-600 dark:text-gray-300 font-semibold text-lg mr-1 block text-[1rem]">
               Start Date
             </span>
-            <span className="text-gray-600  text-lg"> :- {` ${deadline}`}</span>
+            <span className="text-gray-600 dark:text-gray-300  text-lg"> :- {` ${deadline}`}</span>
           </div>
         </div>
         <div className="flex items-center">
@@ -53,10 +53,10 @@ function CurrentTask({ header, content, deadline, type, duration, home, click= (
             <i className="ri-timer-line"></i>
           </div>
           <div className="flex items-center">
-            <span className="text-gray-600 font-semibold text-lg mr-1 block text-[1rem]">
+            <span className="text-gray-600 dark:text-gray-300 font-semibold text-lg mr-1 block text-[1rem]">
               End Date
             </span>
-            <span className="text-gray-600  text-lg">:- {duration}</span>
+            <span className="text-gray-600 dark:text-gray-300 text-lg">:- {duration}</span>
           </div>
         </div>
       </div>
