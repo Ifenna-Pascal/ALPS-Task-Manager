@@ -10,6 +10,7 @@ const initialState = {
   loggedInUser: {},
   currentTask: {},
   allTasks: 0,
+  messages: [],
   pendingTask: { total: 0, tasks: [] },
   completedTask: { total: 0, tasks: [] },
   inProgressTask: { total: 0, tasks: [] },
@@ -32,6 +33,9 @@ export const userSlice = createSlice({
     allMyTasks: (state, action) => {
       state.tasks = action.payload;
     },
+    allMyMessages: (state, action) => {
+      state.messages = action.payload;
+    },
     filterTasks: (state, action) => {
       console.log(filter(action.payload, "pending"), "filter");
       state.allTasks = action.payload.length;
@@ -51,6 +55,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { userDetails, addCurrentTask, filterTasks, allMyTasks, loggedUser } = userSlice.actions;
+export const { userDetails, addCurrentTask, filterTasks, allMyTasks, loggedUser, allMyMessages } = userSlice.actions;
 
 export default userSlice.reducer;

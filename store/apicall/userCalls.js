@@ -78,6 +78,14 @@ const allTasks = async (id) => {
   return data;
 };
 
+const allMessages = async (id) => {
+  const data = await sanityClient.fetch(
+    `*[_type == 'messages' && references('${id}')]`
+  );
+
+  return data;
+};
+
 const filteredTasks = async (id, status, user_id) => {
   const data = await sanityClient.fetch(
     `*[_type == 'tasks' && references("${user_id}") && taskProgress == "${status}" && _id != "${id}"]`
@@ -100,4 +108,5 @@ export {
   oneUserTask,
   // uploadImage,
   filteredTasks,
+  allMessages
 };

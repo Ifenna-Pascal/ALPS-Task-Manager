@@ -1,19 +1,10 @@
-import { getSession } from "next-auth/react";
-import React from "react";
-import MainLayout from "../../layout/MainLayout";
-import { loggedUser } from "../../store/slice/userSlice";
-import { wrapper } from "../../store/store";
-import { loadUser } from "../../util/tokenLoad";
-
 export default function PasswordSettings() {
+
+  // const form = useState()
   return (
-    <MainLayout>
-      <div>
-        <div>
+      <div className='md:max-w-[70%] max-w-full   mx-auto'>
+        <div className="mt-12"> 
           <section className="p-6">
-            <p className="text-gray-700 text-2xl font-bold mt-5 mb-6">
-              Settings
-            </p>
             <form
               noValidate=""
               action=""
@@ -22,13 +13,9 @@ export default function PasswordSettings() {
               <fieldset className="p-6 rounded-md shadow-sm bg-white lg:px-24 pt-10 pb-10">
                 <div className="space-y-2 col-span-full mb-6">
                   <p className="font-medium">Password Settings</p>
-                  <p className="text-xs">
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    Adipisci fuga autem eum!
-                  </p>
                 </div>
                 <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
-                  <div className="col-span-full ">
+                  {/* <div className="col-span-full ">
                     <label htmlFor="currentPassword" className="text-sm">
                       Enter Current Password
                     </label>
@@ -38,6 +25,25 @@ export default function PasswordSettings() {
                       placeholder="******"
                       className="w-full p-3 rounded-md bg-[#F7F6F4]"
                     />
+                  </div> */}
+                 
+                  <div className="col-span-full ">
+                    <label htmlFor="email" className="text-sm">
+                      Enter Verification Email
+                    </label>
+                    <div className="flex">
+                      <input
+                        type="email"
+                        name="email"
+                        id="vcode"
+                        placeholder="mail@mail.com"
+                        className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                      />
+                      {/* <span className="flex items-center px-2  whitespace-nowrap text-white rounded-r-md bg-[#247bf4]">
+                        Send Code
+                      </span> */}
+                    </div>
+
                   </div>
                   <div className="col-span-full ">
                     <label htmlFor="newPassword" className="text-sm">
@@ -49,23 +55,6 @@ export default function PasswordSettings() {
                       placeholder="******"
                       className="w-full p-3 rounded-md bg-[#F7F6F4]"
                     />
-                  </div>
-                  <div className="col-span-full ">
-                    <label htmlFor="email" className="text-sm">
-                      Enter Verification Email
-                    </label>
-                    <div className="flex">
-                      <input
-                        type="text"
-                        name="vcode"
-                        id="vcode"
-                        placeholder="******"
-                        className="w-full p-3 rounded-md bg-[#F7F6F4]"
-                      />
-                      <span className="flex items-center px-2  whitespace-nowrap text-white rounded-r-md bg-[#247bf4]">
-                        Send Code
-                      </span>
-                    </div>
                   </div>
 
                   <div className="col-span-full justify-center mt-4">
@@ -79,14 +68,7 @@ export default function PasswordSettings() {
           </section>
         </div>
       </div>
-    </MainLayout>
   );
 }
 
-export const getServerSideProps = wrapper.getServerSideProps(
-  (store) => async ({ req, res }) => {
-    const session = await getSession({ req })
-    const fetchedUser = await loadUser(session?.user?.accessToken);
-    await store.dispatch(loggedUser(fetchedUser));
-  }
-);
+ 

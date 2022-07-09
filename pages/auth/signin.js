@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { signIn, getCsrfToken, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { toast } from "react-toastify";
+import Link from "next/link";
 export default function Login({ csrfToken }) {
   const session = useSession();
   const router = useRouter();
@@ -68,30 +69,36 @@ export default function Login({ csrfToken }) {
                   htmlFor="password"
                   className="block text-sm text-gray-800"
                 >
-                  Password
+                  Password<i className="ri-eye-line"></i>
                 </label>
                 <div className="relative">
-              <div
-                className="absolute right-0 inset-y-0 flex items-center justify-center pr-3"
-                onClick={() => setShow(!show)}
-              >
-                {" "}
-                <i className={`${show ? "ri-eye-off-line" : "ri-eye-line"} ml-4`}></i>
+                  <div
+                    className="absolute right-0 inset-y-0 flex items-center justify-center pr-3"
+                    onClick={() => setShow(!show)}
+                  >
+                    {" "}
+                    <i
+                      className={`${
+                        show ? "ri-eye-line  text-lg" : "ri-eye-line text-lg"
+                      } text-gray-700  ml-4`}
+                    ></i>
+                  </div>
+                  <input
+                    value={userData.password}
+                    onChange={handleChange}
+                    name="password"
+                    type={show ? "text" : "password"}
+                    className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
+                  />
+                </div>
+
+                <Link href='/settings/password'>
+                  <a className="text-xs text-gray-600 hover:underline">
+                    Forget Password?
+                  </a>
+                </Link>
               </div>
-                <input
-                  value={userData.password}
-                  onChange={handleChange}
-                  name="password"
-                  type={show ? "text" : "password"}
-                  className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                />
-              </div>
-          
-              <a href="#" className="text-xs text-gray-600 hover:underline">
-                Forget Password?
-              </a>
-              </div>
-  
+
               <div className="mt-6">
                 <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
                   {loading ? "Processing..." : "Login"}
