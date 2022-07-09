@@ -13,7 +13,6 @@ const options = {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials, req) {
-        // console.log(credentials);
         try {
           const user = await client.fetch(
             `*[_type == "user" && email == "${credentials.email}"]{..., "imageUrl": userImage.asset->url, "headerUrl": headerImage.asset->url}[0]`
@@ -22,7 +21,6 @@ const options = {
           if (!bcrypt.compareSync(credentials.password, user.password)) {
             throw new Error("password does not match");
           } else {
-            // console.log("my user", user);
             return user;
           }
         } catch (error) {

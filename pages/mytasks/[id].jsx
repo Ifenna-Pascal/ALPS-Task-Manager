@@ -5,12 +5,16 @@ import EmptyState from "../../components/EmptyState";
 import { getSession } from 'next-auth/react';
 import { useRouter } from "next/router";
 import {
+  allMessages,
   allTasks,
   filteredTasks,
+  getUserDetails,
   oneUserTask,
 } from "../../store/apicall/userCalls";
 import MainLayout from "../../layout/MainLayout";
 import { loadUser } from "../../util/tokenLoad";
+import { allMyMessages, loggedUser } from "../../store/slice/userSlice";
+import { wrapper } from "../../store/store";
 function OneProject({ project, tasks }) {
   const router = useRouter();
   return (
@@ -62,17 +66,27 @@ function OneProject({ project, tasks }) {
 
 export default OneProject;
 
-export async function getServerSideProps({ req, res, params }) {
-  const session = await getSession({ req })
-  console.log('sessionss');
-  const fetchedUser = await loadUser(session?.user?.accessToken);
-  const project = await oneUserTask(params.id);
-  const tasks = await filteredTasks(project._id, project.taskProgress,fetchedUser?._id);
-  return { props: { project, tasks } };
-}
-
-// export async function getStaticProps({ params }) {
+// export const getServerSideProps = wrapper.getServerSideProps(
+//   (store) => async ({ req, res }) => {
+//   const session = await getSession({ req })
+//   const fetchedUser = await loadUser(session?.user?.accessToken);
+//   const allMessage = await allMessages(fetchedUser?._id);
+//   // await store.dispatch(allMyMessages(allMessage));
 //   const project = await oneUserTask(params.id);
-//   const tasks = await filteredTasks(project._id, project.taskProgress);
+//   const tasks = await filteredTasks(project._id, project.taskProgress,fetchedUser?._id);
 //   return { props: { project, tasks } };
 // }
+
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async ({ req, res, params }) => {
+    const session = await getSession({ req })
+      const fetchedUser = await loadUser(session?.user?.accessToken);
+      const allMessage = await allMessages(fetchedUser?._id);
+      const result = await getUserDetails(fetchedUser?._id);
+      await store.dispatch(allMyMessages(allMessage));
+      await store.dispatch(loggedUser(result));
+      const project = await oneUserTask(params.id);
+      const tasks = await filteredTasks(project._id, project.taskProgress,fetchedUser?._id);
+      return { props: { project, tasks } };
+  }
+);

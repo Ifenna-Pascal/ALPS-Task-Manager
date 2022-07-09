@@ -39,29 +39,7 @@ const updateUserDetails = async (
   return data;
 };
 
-// const uploadImage = async (userId, filePath) => {
-//   const data = sanityClient.assets
-//     .upload("image", createReadStream(filePath), {
-//       filename: basename(filePath),
-//     })
-//     .then((imageAsset) => {
-//       // Here you can decide what to do with the returned asset document.
-//       // If you want to set a specific asset field you can to the following:
-//       return client
-//         .patch(`${userId}`)
-//         .set({
-//           userImage: {
-//             _type: "image",
-//             asset: {
-//               _type: "reference",
-//               _ref: imageAsset._id,
-//             },
-//           },
-//         })
-//         .commit();
-//     });
-//   return data;
-// };
+ 
 
 const getUserTasks = async (id) => {
   const data = await sanityClient.fetch(
@@ -80,7 +58,7 @@ const allTasks = async (id) => {
 
 const allMessages = async (id) => {
   const data = await sanityClient.fetch(
-    `*[_type == 'messages' && references('${id}')]`
+    `*[_type == 'messages' && references('${id}') && dateTime(_updatedAt) > dateTime(now()) - 60*60*24*7] | order(_createdAt desc)`
   );
 
   return data;

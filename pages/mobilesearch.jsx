@@ -26,7 +26,7 @@ function MobileSearch() {
         setSearch(searched);
     }
     return (
-        <div className="bg-gray-100 h-screen">
+        <div className="bg-gray-100 dark:bg-[#111827] h-screen">
 
             <div className="relative w-full sticky top-3 px-5 md:hidden flex py-6  items-center">
                 <span className="absolute inset-y-0 left-0 flex items-center pl-8">
@@ -59,8 +59,8 @@ function MobileSearch() {
                 className="flex px-5 md:hidden mb-6 items-center"
             >
                 <div className="text-xl text-[#E74141]"></div>
-                <i className="ri-arrow-left-line text-2xl mr-1" onClick={() => router.push("/mytasks")} ></i>
-                <span className="text-gray-700 font-Poppins font-[400] text-[20px] leading-[24px]" onClick={() => router.push("/mytasks")} >
+                <i className="ri-arrow-left-line dark:text-gray-300 text-2xl mr-1" onClick={() => router.push("/mytasks")} ></i>
+                <span className="text-gray-700 font-Poppins dark:text-gray-300  font-[400] text-[20px] leading-[24px]" onClick={() => router.push("/mytasks")} >
                     Back
                 </span>
             </div>

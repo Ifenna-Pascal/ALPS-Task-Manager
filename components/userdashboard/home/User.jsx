@@ -21,7 +21,7 @@ function User() {
           {profile && profile.userName}
         </span>
         <span className="text-gray-500 dark:text-gray-300 text-lg font-Poppins">
-          Backend Developer{" "}
+          {profile && profile.Role}{" "}
         </span>
       </div>
 

@@ -10,7 +10,7 @@ function CompletedTask() {
   return (
     <div className="mb-4">
       <TaskHeading
-        color="bg-blue-400"
+        color="bg-green-400"
         text="Completed"
         total={total && total}
       />

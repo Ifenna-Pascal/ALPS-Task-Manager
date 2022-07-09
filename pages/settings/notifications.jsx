@@ -2,7 +2,8 @@ import { getSession } from "next-auth/react";
 import React from "react";
 import Toggle from "../../components/userdashboard/Toggle";
 import MainLayout from "../../layout/MainLayout";
-import { loggedUser } from "../../store/slice/userSlice";
+import { allMessages } from "../../store/apicall/userCalls";
+import { allMyMessages, loggedUser } from "../../store/slice/userSlice";
 import { wrapper } from "../../store/store";
 import { loadUser } from "../../util/tokenLoad";
 
@@ -92,6 +93,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
   (store) => async ({ req, res }) => {
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
+    const allMessage = await allMessages(fetchedUser?._id);
+    await store.dispatch(allMyMessages(allMessage));
     await store.dispatch(loggedUser(fetchedUser));
   }
 );

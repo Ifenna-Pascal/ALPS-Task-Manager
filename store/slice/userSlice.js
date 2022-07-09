@@ -25,6 +25,7 @@ export const userSlice = createSlice({
       state.loggedInUser = {...action.payload}
     },
     userDetails: (state, action) => {
+      console.log('detailssss')
       state.profile = action.payload;
     },
     addCurrentTask: (state, action) => {
@@ -34,7 +35,7 @@ export const userSlice = createSlice({
       state.tasks = action.payload;
     },
     allMyMessages: (state, action) => {
-      state.messages = action.payload;
+      state.messages = [...action.payload]
     },
     filterTasks: (state, action) => {
       console.log(filter(action.payload, "pending"), "filter");

@@ -3,8 +3,8 @@ import CompletedTask from "../../components/userdashboard/tasks/CompletedTask";
 import InProgress from "../../components/userdashboard/tasks/InProgress";
 import PendingTask from "../../components/userdashboard/tasks/PendingTask";
 import MainLayout from "../../layout/MainLayout";
-import { allTasks, getUserDetails } from "../../store/apicall/userCalls";
-import { filterTasks, loggedUser } from "../../store/slice/userSlice";
+import { allMessages, allTasks, getUserDetails } from "../../store/apicall/userCalls";
+import { allMyMessages, filterTasks, loggedUser } from "../../store/slice/userSlice";
 import { wrapper } from "../../store/store";
 import { getSession } from 'next-auth/react';
 import { loadUser } from "../../util/tokenLoad";
@@ -35,6 +35,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const fetchedUser = await loadUser(session?.user?.accessToken);
     const allTask = await allTasks(fetchedUser?._id);
     const result = await getUserDetails(fetchedUser?._id);
+    const allMessage = await allMessages(fetchedUser?._id);
+    await store.dispatch(allMyMessages(allMessage));
     await store.dispatch(loggedUser(result));
     await store.dispatch(filterTasks(allTask));
   }

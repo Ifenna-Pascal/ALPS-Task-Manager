@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import ThemeButton from "../../layout/ThemeButton";
 
-const Display = ({ children, type, ...rest }) => {
+const Display = ({ children, type, display, ...rest }) => {
   const { loggedInUser } = useSelector(state => state.users);
   const [show, setShow] = useState(false);
   return (
@@ -21,7 +21,7 @@ const Display = ({ children, type, ...rest }) => {
           /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
         ) : (
           <div className="flex items-center relative text-[#6B6D72] dark:text-gray-400 text-2xl">
-            <span {...rest}></span>
+            {display && <span {...rest}></span>}
             <i className={type}></i>
           </div>
         )}
@@ -36,7 +36,7 @@ const Display = ({ children, type, ...rest }) => {
 function Navbar() {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
-  const { loggedInUser } = useSelector(state => state.users);
+  const { loggedInUser, messages } = useSelector(state => state.users);
   useEffect(() => {
     const fetchData = async () => {
       const res = await allTasks(loggedInUser?._id);
@@ -83,68 +83,35 @@ function Navbar() {
             <ThemeButton />
             <Display
               type="ri-chat-1-line"
+              display={messages && messages.length > 0}
               className="p-1 bg-blue-500 absolute right-[0.1rem] top-1  rounded-full"
             >
               <div className="absolute right-0 left-0 md:left-auto  bottom-16 md:bottom-auto z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
                 <div className="py-2">
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Sara Salah
-                      </span>{" "}
-                      replied on the{" "}
-                      <span className="font-bold text-blue-500" href="#">
-                        Upload Image
-                      </span>{" "}
-                      artical . 2m
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Slick Net
-                      </span>{" "}
-                      start following you . 45m
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Jane Doe
-                      </span>{" "}
-                      Like Your reply on{" "}
-                      <span className="font-bold text-blue-500" href="#">
-                        Test with TDD
-                      </span>{" "}
-                      artical . 1h
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Abigail Bennett
-                      </span>{" "}
-                      start following you . 3h
-                    </p>
-                  </a>
+                  {
+                    messages && messages.length > 0 && messages.map((x, i) => (
+                      <a
+                        key={i}
+                        href="#"
+                        className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
+                      >
+                        <p className="mx-2 text-sm text-gray-600 dark:text-white">
+                          <span className="font-bold block" href="#">
+                            {x.title}:-
+                          </span>{" "}
+                          {x.message}
+                        </p>
+                      </a>
+                    ))
+                  }
+
                 </div>
               </div>
             </Display>
 
             <Display
               type="ri-notification-3-line"
+              display={true}
               className="p-1 bg-red-500 absolute right-1 top-1  rounded-full"
             >
               <div className="absolute md:right-0  md:left-auto bottom-16 md:bottom-auto -left-24 z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">

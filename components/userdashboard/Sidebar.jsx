@@ -25,7 +25,7 @@ function Sidebar({ show, closeSidebar }) {
             path="/"
             classes={
               router.pathname === "/" || router.pathname === "/viewprofile"
-                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] bg-gradient-to-l from-blue-400  border-[#247bf4] "
                 : ""
             }
             class_text={
@@ -42,7 +42,7 @@ function Sidebar({ show, closeSidebar }) {
             classes={
               router.pathname === "/mytasks" ||
                 /\/mytasks\/\D+/.test(router.pathname)
-                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 bg-gradient-to-l from-blue-400  border-r-[3px] border-[#247bf4] "
                 : ""
             }
             class_text={
@@ -59,7 +59,7 @@ function Sidebar({ show, closeSidebar }) {
             path="/"
             classes={
               router.pathname === "/logs"
-                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] bg-gradient-to-l from-blue-400  border-[#247bf4] "
                 : ""
             }
             class_text={router.pathname === "/logs" ? "text-[#0a51b6] " : ""}
@@ -71,7 +71,7 @@ function Sidebar({ show, closeSidebar }) {
             path="/settings"
             classes={
               router.pathname === "/settings" || /\/settings\/\w+/.test(router.pathname)
-                ? " dark:bg-blue-500 border-r-[3px] border-[#247bf4] "
+                ? " dark:bg-blue-500 border-r-[3px] bg-gradient-to-l from-blue-400  border-[#247bf4] "
                 : ""
             }
             class_text={

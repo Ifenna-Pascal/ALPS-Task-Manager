@@ -34,9 +34,9 @@ export default function index() {
     <MainLayout>
       <div className=" min-h-screen">
         <div className=" mx-auto px-8 ">
-          <p className="text-gray-700 text-2xl font-bold mt-5 mb-6">Settings</p>
-          <div className=" bg-white rounded mt-5  lg:px-24 py-12 ">
-            <p className="text-gray-600 mb-4">
+          <p className="text-gray-700 text-2xl ddark:text-gray-300 font-bold mt-5 mb-6">Settings</p>
+          <div className=" bg-white dark:bg-transparent rounded-xl mt-5  lg:px-24 py-12 ">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               Customise the look and feel of your application
             </p>
             {settings.map((setting, index) => (
@@ -44,10 +44,10 @@ export default function index() {
                 <a>
                   <div
                     key={setting}
-                    className="flex justify-between items-center border rounded-lg w-100 py-4 px-8 mb-4 text-gray-600"
+                    className="flex justify-between items-center border dark:border-none dark:bg-[#1F2937]  rounded-lg w-100 py-4 px-8 mb-4 text-gray-600"
                   >
-                    <div className="flex gap-3 items-center">
-                      <div className="flex items-center justify-center bg-blue-50 rounded w-12 h-12">
+                    <div className="flex gap-3 dark:text-gray-300 items-center">
+                      <div className="flex items-center text-xl dark:text-white justify-center dark:bg-transparent shadow-2xl bg-blue-50 rounded w-12 h-12">
                         {setting.icon}
                       </div>
                       {setting.title}

@@ -11,7 +11,7 @@ function InProgress() {
   return (
     <div className="mb-4">
       <TaskHeading
-        color="bg-blue-400"
+        color="bg-red-400"
         text="In Progress"
         total={total && total}
       />
