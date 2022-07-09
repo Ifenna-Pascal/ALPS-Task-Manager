@@ -28,8 +28,9 @@ export default async function handler(req, res) {
       }
     );
     console.log("Email sent");
-    return;
+    return response.json({ success: true });
   } catch (err) {
-    console.log(err.response.data);
+    res.send(err);
+    // console.log(err.response.data);
   }
 }

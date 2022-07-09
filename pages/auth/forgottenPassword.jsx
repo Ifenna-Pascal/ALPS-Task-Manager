@@ -5,15 +5,22 @@ import Link from "next/link";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 
-export default function Login({ csrfToken }) {
+export default function ForgottenPassword({ csrfToken }) {
   const router = useRouter();
   const [userData, setUserData] = useState({
     email: "",
     password: "",
-    oldPassword: "",
+    token: "",
     confirmPassword: "",
   });
-  const [loading, setLoading] = useState(false);
+  const [isTokenSent, setIsTokenSent] = useState(false);
+
+  // const handleTokenChange = () => {
+  //   new Promise((resolve, reject) => {
+  //     setTimeout(setIsTokenSent(true), 3000);
+  //     resolve(setIsTokenSent(false));
+  //   });
+  // };
 
   const handleChange = (e) => {
     setUserData({ ...userData, [e.target.name]: e.target.value });
@@ -21,12 +28,10 @@ export default function Login({ csrfToken }) {
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    setLoading(true);
-
     if (
       !userData.email ||
       !userData.password ||
-      !userData.oldPassword ||
+      !userData.token ||
       !userData.confirmPassword
     ) {
       toast.error("Error Empty fields");
@@ -40,9 +45,9 @@ export default function Login({ csrfToken }) {
       return;
     }
     try {
-      const { data } = await axios.post("/api/auth/resetPassword", {
+      const { data } = await axios.post("/api/auth/forgottenPassword", {
         email: userData.email,
-        oldPassword: userData.oldPassword,
+        token: userData.token,
         password: userData.password,
         confirmPassword: userData.confirmPassword,
       });
@@ -57,8 +62,34 @@ export default function Login({ csrfToken }) {
         error.toString();
       console.log(message);
       toast.error(message);
-    } finally {
-      setLoading(false);
+    }
+  };
+
+  const handleSendOTP = async (e) => {
+    e.preventDefault();
+    if (!userData.email) {
+      toast.error("Email is required");
+      return;
+    }
+    try {
+      const { data } = await axios.post("/api/auth/resendResetPasswordPin", {
+        email: userData.email,
+        oldPassword: userData.oldPassword,
+        password: userData.password,
+        confirmPassword: userData.confirmPassword,
+      });
+      toast.success("A token have been sent to your email address");
+      // router.push("/auth/signin");
+      setIsTokenSent(true);
+      // console.log(data);
+    } catch (error) {
+      const message =
+        error?.response?.data?.message ||
+        error.response?.message ||
+        error.message ||
+        error.toString();
+      console.log(message);
+      toast.error(message);
     }
   };
 
@@ -86,19 +117,28 @@ export default function Login({ csrfToken }) {
             </div>
             <div className="mt-4">
               <div>
-                <label
-                  htmlFor="password"
-                  className="block text-sm text-gray-800"
-                >
-                  old Password
+                <label htmlFor="token" className="block text-sm text-gray-800">
+                  Reset token Pin
                 </label>
                 <input
-                  value={userData.oldPassword}
+                  value={userData.token}
                   onChange={handleChange}
-                  name="oldPassword"
+                  name="token"
                   type="password"
                   className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                 />
+              </div>
+              <div className=" flex justify-end mt-2">
+                <button
+                  disabled={isTokenSent}
+                  type="button"
+                  onClick={handleSendOTP}
+                  className={`${
+                    isTokenSent ? "bg-green-500 opacity-50" : "bg-blue-700"
+                  } rounded-md text-sm whitespace-nowrap px-4 py-2 tracking-wide text-white transition-colors duration-200 transform  hover:bg-blue-600 focus:outline-none focus:bg-blue-600`}
+                >
+                  {isTokenSent ? "token Sent" : " Send Reset Pin"}
+                </button>
               </div>
             </div>
             <div className="mt-4">
@@ -136,16 +176,13 @@ export default function Login({ csrfToken }) {
               </div>
               <Link href="/auth/signin">
                 <a className="text-xs text-gray-600 hover:underline">
-                  Go to Login
+                  Go to ForgottenPassword
                 </a>
               </Link>
 
               <div className="mt-6">
-                <button
-                  disabled={loading}
-                  className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-                >
-                  {loading ? "Loading..." : "Save"}
+                <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-blue-700 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600">
+                  Save
                 </button>
               </div>
             </div>
@@ -154,12 +191,4 @@ export default function Login({ csrfToken }) {
       </div>
     </div>
   );
-}
-
-export async function getServerSideProps(context) {
-  return {
-    props: {
-      csrfToken: await getCsrfToken(context),
-    },
-  };
 }
