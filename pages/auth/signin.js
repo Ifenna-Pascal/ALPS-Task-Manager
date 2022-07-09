@@ -79,8 +79,8 @@ export default function Login({ csrfToken }) {
                     {" "}
                     <i
                       className={`${
-                        show ? "ri-eye-line  text-lg" : "ri-eye-line text-lg"
-                      } text-gray-700  ml-4`}
+                        show ? "ri-eye-off-line" : "ri-eye-line"
+                      } ml-4`}
                     ></i>
                   </div>
                   <input
@@ -91,11 +91,11 @@ export default function Login({ csrfToken }) {
                     className="block w-full px-4 py-2 mt-2 text-blue-700 bg-white border rounded-md focus:border-blue-400 focus:ring-blue-300 focus:outline-none focus:ring focus:ring-opacity-40"
                   />
                 </div>
+                <Link href="/auth/forgottenPassword">
 
-                <Link href='/settings/password'>
-                  <a className="text-xs text-gray-600 hover:underline">
-                    Forget Password?
-                  </a>
+                                <a className="text-xs text-gray-600 hover:underline">
+                                  Forget Password?
+                                </a>
                 </Link>
               </div>
 
@@ -104,6 +104,11 @@ export default function Login({ csrfToken }) {
                   {loading ? "Processing..." : "Login"}
                 </button>
               </div>
+              <Link href={"/resetPassword"}>
+                <a className="flex justify-end  mt-2 text-blue-700 text-xs text-gray-600 hover:underline">
+                  New User Reset your password
+                </a>
+              </Link>
             </div>
           </form>
         </div>

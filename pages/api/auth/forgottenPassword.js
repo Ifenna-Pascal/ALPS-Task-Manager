@@ -10,18 +10,30 @@ handler.post(async (req, res) => {
   const projectId = process.env.PROJECT_ID;
   const dataset = process.env.DATA_SET;
   const tokenWithWriteAccess = process.env.SANITY_AUTH_TOKEN;
-
-  if (!req.body.email || !req.body.oldPassword || !req.body.password) {
-    return res.status(400).send({ message: "fields not set" });
-  }
-
+  const email = req.body.email.toLowerCase();
   try {
     const existUser = await client.fetch(
       `*[_type == "user" && email == $email][0]`,
       {
-        email: req.body.email,
+        email: email,
       }
     );
+
+    const verification = await client.fetch(
+      `*[_type == "verification-token" && identifier == $identifier][0]`,
+      {
+        identifier: email,
+      }
+    );
+
+    console.log(verification);
+    if (!verification) {
+      return res.status(401).send({ message: "Invalid email" });
+    }
+    console.log(req.body);
+    if (verification.token != req.body.token) {
+      return res.status(401).send({ message: "Invalid Token" });
+    }
 
     const updateMutations = [
       {
@@ -34,11 +46,7 @@ handler.post(async (req, res) => {
       },
     ];
 
-    if (existUser.password !== req.body.oldPassword) {
-      return res.status(401).send({ message: "Invalid password" });
-    }
-
-    const { data } = await axios.post(
+    await axios.post(
       `https://${projectId}.api.sanity.io/v1/data/mutate/${dataset}`,
       { mutations: updateMutations },
       {
@@ -53,6 +61,7 @@ handler.post(async (req, res) => {
       .status(200)
       .send({ message: "Password updated successfully Proceed to login" });
   } catch (error) {
+    console.log(error.response);
     res.status(400).send({ message: "Invalid email or password" });
   }
 });
