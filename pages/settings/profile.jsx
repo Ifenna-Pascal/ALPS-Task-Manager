@@ -82,7 +82,7 @@ export default function ProfileSettings() {
                     </label>
                   </div>
                   {
-                    showModal && <div className={`absolute left-24   bottom-32 md:bottom-auto z-20   mt-5 overflow-hidden bg-white rounded-md shadow-2xl dark:bg-gray-800`}>
+                    showModal && <div className={`absolute md:left-24 left-32  md:bottom-auto z-20   mt-5 overflow-hidden bg-white rounded-md shadow-2xl dark:bg-gray-800`}>
                       <label htmlFor="image" className='block py-3 cursor-pointer px-4 hover:bg-gray-200 dark:hover:bg-[#333d4c] dark:text-white text-gray-500' onClick={() => setImageType('headerImage')}> Backdrop Image
                         <input id="image" type="file" name="file" className="hidden" onChange={handleUpload} />
                       </label>

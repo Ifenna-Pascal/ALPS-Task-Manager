@@ -36,7 +36,6 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const currentTask = await getUserTasks(fetchedUser?._id);
     const allTask = await allTasks(fetchedUser?._id);
     const allMessage = await allMessages(fetchedUser?._id);
-    console.log(allMessage, "messages");
     await store.dispatch(allMyMessages(allMessage));
     await store.dispatch(filterTasks(allTask));
     await store.dispatch(loggedUser(result));

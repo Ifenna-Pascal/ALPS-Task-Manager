@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import users from "../store/slice/userSlice";
+import navToggle from '../store/slice/showSlice';
 import { createWrapper, HYDRATE } from "next-redux-wrapper";
 
 const combineReducer = combineReducers({
   users,
+  navToggle
 });
 
 const masterReducer = (state, action) => {

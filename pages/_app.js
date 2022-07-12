@@ -27,7 +27,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         theme="light"
       />
       {loader ? (
-        <div className="w-screen flex items-center justify-center h-screen">
+        <div className="w-screen dark:bg-[#161e2f] bg-[#F7F6F4] flex items-center justify-center h-screen">
           <div className="w-full h-full w-[60px] h-[60px] rounded-full p-8 bg-blue-500 animate-ping" />
         </div>
       ) : (

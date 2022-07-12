@@ -18,6 +18,7 @@ function Dashboard() {
         {
           currentTask ? <CurrentTask
             type="current"
+            level= {30}
             duration={currentTask ? currentTask.endDate : "...."}
             deadline={currentTask ? currentTask.startDate : "...."}
             header={currentTask ? currentTask.taskName : "..."}

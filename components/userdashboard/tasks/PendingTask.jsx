@@ -7,7 +7,6 @@ function PendingTask() {
   const {
     pendingTask: { total, tasks },
   } = useSelector((state) => state.users);
-  console.log("pending Taks", tasks, total);
   return (
     <div className="mb-4">
       <TaskHeading

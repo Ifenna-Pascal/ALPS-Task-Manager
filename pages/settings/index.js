@@ -5,8 +5,8 @@ import MainLayout from "../../layout/MainLayout";
 import { getSession } from "next-auth/react";
 import { wrapper } from "../../store/store";
 import { loadUser } from "../../util/tokenLoad";
-import { loggedUser } from "../../store/slice/userSlice";
-import { getUserDetails } from "../../store/apicall/userCalls";
+import { allMyMessages, loggedUser } from "../../store/slice/userSlice";
+import { allMessages, getUserDetails } from "../../store/apicall/userCalls";
 const settings = [
   {
     title: "Personal Information",
@@ -34,7 +34,7 @@ export default function index() {
     <MainLayout>
       <div className=" min-h-screen">
         <div className=" mx-auto px-8 ">
-          <p className="text-gray-700 text-2xl ddark:text-gray-300 font-bold mt-5 mb-6">Settings</p>
+          <p className="text-gray-700 text-2xl dark:text-gray-300 font-bold mt-5 mb-6">Settings</p>
           <div className=" bg-white dark:bg-transparent rounded-xl mt-5  lg:px-24 py-12 ">
             <p className="text-gray-600 dark:text-gray-300 mb-4">
               Customise the look and feel of your application
@@ -69,6 +69,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
     const result = await getUserDetails(fetchedUser?._id);
+    const allMessage = await allMessages(fetchedUser?._id);
+    await store.dispatch(allMyMessages(allMessage));
     await store.dispatch(loggedUser(result));
   }
 );

@@ -10,7 +10,8 @@ const getUserDetails = async (id) => {
 
 const updateUserDetails = async (
   user_id,
-  {
+  { 
+    phoneNumber,
     userName,
     firstName,
     lastName,
@@ -24,7 +25,8 @@ const updateUserDetails = async (
 ) => {
   const data = sanityClient
     .patch(`${user_id}`)
-    .set({
+    .setIfMissing({
+      phoneNumber,
       userName,
       firstName,
       lastName,

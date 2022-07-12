@@ -11,9 +11,9 @@ const initialState = {
   currentTask: {},
   allTasks: 0,
   messages: [],
-  pendingTask: { total: 0, tasks: [] },
-  completedTask: { total: 0, tasks: [] },
-  inProgressTask: { total: 0, tasks: [] },
+  pendingTask: { total: 0, tasks: [], level:0 },
+  completedTask: { total: 0, tasks: [], level:0 },
+  inProgressTask: { total: 0, tasks: [], level:0 },
   tasks: [],
 };
 
@@ -45,10 +45,12 @@ export const userSlice = createSlice({
         tasks: [...filter(action.payload, "pending")[1]],
       };
       state.inProgressTask = {
+        level: 50,
         total: filter(action.payload, "inProgress")[0],
         tasks: [...filter(action.payload, "inProgress")[1]],
       };
       state.completedTask = {
+        level:100,
         total: filter(action.payload, "done")[0],
         tasks: [...filter(action.payload, "done")[1]],
       };

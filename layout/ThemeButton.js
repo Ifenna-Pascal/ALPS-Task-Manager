@@ -4,14 +4,15 @@ function ThemeButton() {
   const [darkMode, setDarkMode] = useState(false);
   useEffect(() => {
     setDarkMode(document.documentElement.classList.contains("dark"));
+    console.log(document.documentElement.classList.contains("dark"), 'mode');
   }, []);
   useEffect(() => {
     if (darkMode) {
       window.document.documentElement.classList.add("dark");
-      localStorage.setItem("vidyaDarkMode", "true");
+      localStorage.setItem("DarkMode", "true");
     } else {
       window.document.documentElement.classList.remove("dark");
-      localStorage.setItem("vidyaDarkMode", "false");
+      localStorage.setItem("DarkMode", "false");
     }
   }, [darkMode]);
 

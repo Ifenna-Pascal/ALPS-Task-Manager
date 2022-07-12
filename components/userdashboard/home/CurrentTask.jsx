@@ -4,9 +4,9 @@ import React from "react";
 import TaskHeading from "../tasks/TaskHeading";
 import Progress from "./Progress";
 
-function CurrentTask({ header, content, deadline, type, duration, home, click= () => {} }) {
+function CurrentTask({ header, content, deadline, type, level=0, duration, home, click= () => {} }) {
   return (
-    <div className="bg-white dark:bg-[#1F2937] flex flex-col  rounded-xl h-full px-6 md:p-8" onClick={click}>
+    <div className="bg-white dark:bg-[#1F2937] flex flex-col py-6 dark:mx-4  rounded-xl h-full px-6 md:p-8" onClick={click}>
       <div className="flex justify-between">
         <TaskHeading
           color="bg-blue-400"
@@ -28,9 +28,9 @@ function CurrentTask({ header, content, deadline, type, duration, home, click= (
         </span>
         <div className="mt-3">
           <span className="block dark:text-gray-300 text-gray-400 mb-1 font-Poppins font-semibold">
-            20% completion
+            {`${level}% completion`}
           </span>
-          <Progress maxCompleted={20} completed={10} />
+          <Progress maxCompleted={100} completed={level} />
         </div>
         <span className="font-Poppins my-4 dark:text-gray-300 text-gray-400 text-base">
           {content}

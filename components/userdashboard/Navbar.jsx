@@ -3,16 +3,19 @@ import Link from "next/link";
 import "remixicon/fonts/remixicon.css";
 import { signOut } from "next-auth/react"
 import { allTasks } from '../../store/apicall/userCalls';
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import ThemeButton from "../../layout/ThemeButton";
 
-const Display = ({ children, type, display, ...rest }) => {
+const Display = ({ children, type, display, show, setShow, active, choosen, setChoosen, ...rest }) => {
   const { loggedInUser } = useSelector(state => state.users);
-  const [show, setShow] = useState(false);
+  const handleShow = () => {
+    setShow(!show);
+    setChoosen(active);
+  }
   return (
-    <div className="relative">
-      <div onClick={() => setShow(!show)}>
+    <div className="">
+      <div onClick={handleShow}>
         {type === "profile" ? (
           loggedInUser?.imageUrl ? <img
             className="object-cover  rounded-full h-8 w-8"
@@ -26,16 +29,17 @@ const Display = ({ children, type, display, ...rest }) => {
           </div>
         )}
       </div>
-      <div onClick={() => setShow(false)}>
-        {show && children}
+      <div className={`duration-300 ${(show && choosen === active) ? 'block' : 'hidden'}`}>
+        {children}
       </div>
     </div>
   );
 };
 
-function Navbar() {
+function Navbar({ show, setShow }) {
   const [tasks, setTasks] = useState([]);
   const [search, setSearch] = useState("");
+  const [choosen, setChoosen] = useState('');
   const { loggedInUser, messages } = useSelector(state => state.users);
   useEffect(() => {
     const fetchData = async () => {
@@ -51,7 +55,10 @@ function Navbar() {
     setSearch(searched);
   }
   return (
-    <>
+    <div
+      className={`${show ? "md:w-[80%] w-full h-screen fixed z-40 bg-[rgba(0,0,0,0.3)] lg:bg-transparent " : "w-full"
+        } duration-300`}
+    >
       <div className="h-16 md:h-12 flex py-2 px-4 fixed md:sticky z-50 md:z-10 bottom-0 dark:bg-[#1F2937] bg-gray-300 md:top-[2rem] w-full md:w-full mx-auto md:bg-white rounded-t-2xl  md:rounded-xl shadow-sm ">
         <div className="flex items-center  w-full justify-between">
           <div className="relative w-[30%] md:flex hidden  items-center">
@@ -82,11 +89,16 @@ function Navbar() {
           <div className="flex justify-between items-center md:w-[20%] w-[90%] mx-auto md:mx-0">
             <ThemeButton />
             <Display
+              setChoosen={setChoosen}
+              choosen={choosen}
+              show={show}
+              setShow={setShow}
+              active='0'
               type="ri-chat-1-line"
               display={messages && messages.length > 0}
               className="p-1 bg-blue-500 absolute right-[0.1rem] top-1  rounded-full"
             >
-              <div className="absolute right-0 left-0 md:left-auto  bottom-16 md:bottom-auto z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
+              <div className={`absolute right-0 md:mt-4 bottom-0 duration-300  left-0 md:left-auto md:bottom-auto z-20  overflow-hidden bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800`}>
                 <div className="py-2">
                   {
                     messages && messages.length > 0 && messages.map((x, i) => (
@@ -110,11 +122,16 @@ function Navbar() {
             </Display>
 
             <Display
+              show={show}
+              setChoosen={setChoosen}
+              choosen={choosen}
+              setShow={setShow}
+              active='1'
               type="ri-notification-3-line"
               display={true}
               className="p-1 bg-red-500 absolute right-1 top-1  rounded-full"
             >
-              <div className="absolute md:right-0  md:left-auto bottom-16 md:bottom-auto -left-24 z-20 mt-3 overflow-hidden bg-white rounded-md shadow-lg w-80 dark:bg-gray-800">
+              <div className="absolute right-0 md:mt-4  bottom-0 left-0 md:left-auto  md:bottom-auto z-20  overflow-hidden bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800">
                 <div className="py-2">
                   <a
                     href="#"
@@ -175,8 +192,12 @@ function Navbar() {
               <Link href="/mobilesearch"><i className="ri-search-2-line"></i></Link>
             </div>
             <div className="relative inline-block">
-              <Display type="profile">
-                <div className="absolute right-0  bottom-16 md:bottom-auto z-20 w-56 py-2 mt-3 overflow-hidden bg-white rounded-md shadow-xl dark:bg-gray-800">
+              <Display type="profile" show={show}
+                setShow={setShow}
+                setChoosen={setChoosen}
+                choosen={choosen}
+                active='2'>
+                <div className="absolute right-0 md:mt-4  bottom-0  md:left-auto  md:bottom-auto z-20 w-[14rem] overflow-hidden py-4 bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800">
                   <a
                     href="#"
                     className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -213,12 +234,12 @@ function Navbar() {
         </div>
       </div>
       {
-        search && <div className="bg-gray-200 duration-300 relative mt-2  py-3 px-6">
+        search && <div className="bg-gray-200 rounded-lg dark:bg-gray-700 duration-300 relative mt-2  py-3 px-6">
           {
-            tasks && tasks.length === 0 && <div className="text-left w-full text-base font-Roboto"> NO TASKS FOUND </div>
+            tasks && tasks.length === 0 && <div className="text-left w-full dark:text-gray-300 text-base font-Roboto"> NO TASKS FOUND </div>
           }
           {
-            tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="text-left w-full text-base font-Roboto"> NO MATCH </div>
+            tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).length === 0 && <div className="text-left w-full text-base dark:text-gray-300 font-Roboto"> NO MATCH </div>
           }
           {
             tasks && tasks.filter(x => x.taskName.toLowerCase().includes(search.toLowerCase())).map((x, i) => {
@@ -227,7 +248,7 @@ function Navbar() {
                 return (<div className="w-full" key={i} onClick={() => setSearch("")}>
 
                   <Link href={`/mytasks/${x._id}`}>
-                    <a className="block mb-2 text-base text-gray-800"> {`> ${x.taskName}`}</a>
+                    <a className="block mb-2 text-base text-gray-800 dark:text-gray-300"> {`> ${x.taskName}`}</a>
                   </Link>
 
                 </div>)
@@ -237,7 +258,7 @@ function Navbar() {
           }
         </div>
       }
-    </>
+    </div>
   );
 }
 

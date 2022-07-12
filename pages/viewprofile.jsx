@@ -3,8 +3,8 @@ import React from "react";
 import EditProfile from "../components/userdashboard/home/EditProfile";
 import UserDetails from "../components/userdashboard/home/UserDetails";
 import MainLayout from "../layout/MainLayout";
-import { getUserDetails } from "../store/apicall/userCalls";
-import { userDetails, loggedUser } from "../store/slice/userSlice";
+import { getUserDetails,  allMessages, } from "../store/apicall/userCalls";
+import { userDetails, loggedUser, allMyMessages } from "../store/slice/userSlice";
 import { wrapper } from "../store/store";
 import { loadUser } from "../util/tokenLoad";
 
@@ -26,6 +26,8 @@ export const getServerSideProps = wrapper.getServerSideProps(
     const session = await getSession({ req })
     const fetchedUser = await loadUser(session?.user?.accessToken);
     const result = await getUserDetails(fetchedUser?._id);
+    const allMessage = await allMessages(fetchedUser?._id);
+    await store.dispatch(allMyMessages(allMessage));
     await store.dispatch(loggedUser(result));
     await store.dispatch(userDetails(result));
   }

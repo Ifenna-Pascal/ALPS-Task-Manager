@@ -5,10 +5,11 @@ import { updateUserDetails } from "../../store/apicall/userCalls";
 import { toast } from 'react-toastify';
 
 export default function Settings() {
-  const { loggedInUser: { _id, userName, origin, userBioData, firstName, lastName, contact, address, dateOfBirth, country } } = useSelector(state => state.users);
+  const { loggedInUser: { _id, userName, origin, phoneNumber, userBioData, firstName, lastName, contact, address, dateOfBirth, country } } = useSelector(state => state.users);
   const initialState = {
     userName: userName ? userName : "",
     firstName: firstName ? firstName : "",
+    phoneNumber: phoneNumber ? phoneNumber : "",
     lastName: lastName ? lastName : "",
     contact: contact ? contact : "",
     address: address ? address : "",
@@ -40,23 +41,23 @@ export default function Settings() {
   return (
     <div>
       <div>
-        <section className="p-3">
+        <section className="px-3 py-8">
           <form
             onSubmit={handleSubmit}
             noValidate=""
             action=""
             className=" flex flex-col mx-auto space-y-4 md:space-y-12"
           >
-            <fieldset className="bg-white grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm ">
+            <fieldset className="bg-white dark:bg-[#1F2937] dark:mx-2   grid grid-cols-4 gap-6 p-6 rounded-md shadow-sm ">
               <div className="space-y-2 col-span-full lg:col-span-1">
-                <p className="font-medium">Personal Information</p>
-                <p className="text-sm text-gray-800">
+                <p className="font-medium dark:text-gray-300">Personal Information</p>
+                <p className="text-sm dark:text-gray-300 text-gray-800 dark:text-gray-300">
                   Update Personal Information
                 </p>
               </div>
               <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="firstname" className="text-sm">
+                  <label htmlFor="firstname" className="text-sm dark:text-gray-300">
                     First Name
                   </label>
                   <input
@@ -66,11 +67,11 @@ export default function Settings() {
                     id="firstname"
                     type="text"
                     placeholder="First name"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="lastname" className="text-sm">
+                  <label htmlFor="lastname" className="text-sm dark:text-gray-300">
                     Last Name
                   </label>
                   <input
@@ -80,22 +81,24 @@ export default function Settings() {
                     id="lastname"
                     type="text"
                     placeholder="Last name"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
-                {/* <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="email" className="text-sm">
-                    Email
+                <div className="col-span-full sm:col-span-3">
+                  <label className="text-sm dark:text-gray-300">
+                    Phone Number
                   </label>
                   <input
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    type="number"
+                    placeholder="0120877890"
+                    value={updateData.phoneNumber}
+                    name="phoneNumber"
+                    onChange={(e) => formHandler(e)}
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
-                </div> */}
+                </div>
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="address" className="text-sm">
+                  <label htmlFor="address" className="text-sm dark:text-gray-300">
                     Address
                   </label>
                   <input
@@ -105,11 +108,11 @@ export default function Settings() {
                     id="address"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="origin" className="text-sm">
+                  <label htmlFor="origin" className="text-sm dark:text-gray-300">
                     State Of Origin
                   </label>
                   <input
@@ -119,11 +122,11 @@ export default function Settings() {
                     id="origin"
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full">
-                  <label htmlFor="state" className="text-sm">
+                  <label htmlFor="state" className="text-sm dark:text-gray-300">
                     Country
                   </label>
                   <input
@@ -133,30 +136,20 @@ export default function Settings() {
                     onChange={(e) => formHandler(e)}
                     type="text"
                     placeholder=""
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
-                {/* <div className="col-span-full sm:col-span-2">
-                  <label htmlFor="zip" className="text-sm">
-                    ZIP / Postal
-                  </label>
-                  <input
-                    id="zip"
-                    type="text"
-                    placeholder=""
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
-                  />
-                </div> */}
+         
               </div>
             </fieldset>
-            <fieldset className="bg-white grid grid-cols-4 gap-6 px-6 md:p-6 rounded-md shadow-sm">
+            <fieldset className="bg-white dark:bg-[#1F2937] dark:mx-2    grid py-6 mb-2 grid-cols-4 gap-6 px-6 md:p-6 rounded-md shadow-sm">
               <div className="space-y-2 col-span-full lg:col-span-1">
-                <p className="font-medium">Profile</p>
-                <p className="text-md text-gray-800">Update your profile status</p>
+                <p className="font-medium dark:text-gray-300">Profile</p>
+                <p className="text-md text-gray-800 dark:text-gray-300">Update your profile status</p>
               </div>
               <div className="grid grid-cols-6 gap-4 col-span-full lg:col-span-3">
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="username" className="text-sm">
+                  <label htmlFor="username" className="text-sm dark:text-gray-300">
                     Username
                   </label>
                   <input
@@ -166,11 +159,11 @@ export default function Settings() {
                     id="username"
                     type="text"
                     placeholder="Username"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
                 <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="dateofbirth" className="text-sm">
+                  <label htmlFor="dateofbirth" className="text-sm dark:text-gray-300">
                     Date Of Birth
                   </label>
                   <input
@@ -180,22 +173,22 @@ export default function Settings() {
                     id="dateOfBirth"
                     type="date"
                     // placeholder="Username"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div>
                 {/* <div className="col-span-full sm:col-span-3">
-                  <label htmlFor="website" className="text-sm">
+                  <label htmlFor="website" className="text-sm dark:text-gray-300">
                     Website
                   </label>
                   <input
                     id="website"
                     type="text"
                     placeholder="https://"
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   />
                 </div> */}
                 <div className="col-span-full">
-                  <label htmlFor="bio" className="text-sm">
+                  <label htmlFor="bio" className="text-sm dark:text-gray-300">
                     Bio
                   </label>
                   <textarea
@@ -204,7 +197,7 @@ export default function Settings() {
                     value={updateData.userBioData}
                     onChange={(e) => formHandler(e)}
                     placeholder=""
-                    className="w-full p-3 rounded-md bg-[#F7F6F4]"
+                    className="w-full p-3 rounded-md dark:bg-gray-700 dark:text-gray-400 bg-[#F7F6F4]"
                   ></textarea>
                 </div>
                 <div>
