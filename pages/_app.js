@@ -8,11 +8,13 @@ const ProgressBar = dynamic(() => import("../components/ProgressBar"), {
 });
 import { SessionProvider } from "next-auth/react";
 import { useState } from "react";
+import { ThemeProvider } from 'next-themes'
 
 function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const [loader, setLoader] = useState(false);
   return (
-    <SessionProvider session={session}>
+    <ThemeProvider attribute="class">
+        <SessionProvider session={session}>
       <ProgressBar loader={loader} setLoader={setLoader} />
       <ToastContainer
         position="top-right"
@@ -34,6 +36,7 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
         <Component {...pageProps} />
       )}
     </SessionProvider>
+    </ThemeProvider>
   );
 }
 

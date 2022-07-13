@@ -18,12 +18,12 @@ const Display = ({ children, type, display, show, setShow, active, choosen, setC
       <div onClick={handleShow}>
         {type === "profile" ? (
           loggedInUser?.imageUrl ? <img
-            className="object-cover  rounded-full h-8 w-8"
+            className="object-cover cursor-pointer  rounded-full h-8 w-8"
             src={loggedInUser?.imageUrl}
             alt="avatar"
-          /> : <span className="w-8 h-8 flex items-center text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
+          /> : <span className="w-8 h-8 flex items-center cursor-pointer text-white text-xl text-center justify-center font-900  bg-purple-500 rounded-full"> {loggedInUser?.userName?.charAt(0).toUpperCase()} </span>
         ) : (
-          <div className="flex items-center relative text-[#6B6D72] dark:text-gray-400 text-2xl">
+          <div className="flex items-center cursor-pointer relative text-[#6B6D72] dark:text-gray-400 text-2xl">
             {display && <span {...rest}></span>}
             <i className={type}></i>
           </div>
@@ -56,7 +56,7 @@ function Navbar({ show, setShow }) {
   }
   return (
     <div
-      className={`${show ? "md:w-[80%] w-full h-screen fixed z-40 bg-[rgba(0,0,0,0.3)] lg:bg-transparent " : "w-full"
+      className={`${show ? "w-full h-screen md:h-12 md:static  fixed z-40 bg-[rgba(0,0,0,0.3)] lg:bg-transparent " : "w-full"
         } duration-300`}
     >
       <div className="h-16 md:h-12 flex py-2 px-4 fixed md:sticky z-50 md:z-10 bottom-0 dark:bg-[#1F2937] bg-gray-300 md:top-[2rem] w-full md:w-full mx-auto md:bg-white rounded-t-2xl  md:rounded-xl shadow-sm ">
@@ -86,7 +86,7 @@ function Navbar({ show, setShow }) {
               onChange={(e) => handleSearch(e.target.value)}
             />
           </div>
-          <div className="flex justify-between items-center md:w-[20%] w-[90%] mx-auto md:mx-0">
+          <div className="flex justify-between items-center md:w-[15%] w-[90%] mx-auto md:mx-0">
             <ThemeButton />
             <Display
               setChoosen={setChoosen}
@@ -101,7 +101,7 @@ function Navbar({ show, setShow }) {
               <div className={`absolute right-0 md:mt-4 bottom-0 duration-300  left-0 md:left-auto md:bottom-auto z-20  overflow-hidden bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800`}>
                 <div className="py-2">
                   {
-                    messages && messages.length > 0 && messages.map((x, i) => (
+                    messages && messages.length > 0 ? messages.map((x, i) => (
                       <a
                         key={i}
                         href="#"
@@ -114,90 +114,27 @@ function Navbar({ show, setShow }) {
                           {x.message}
                         </p>
                       </a>
-                    ))
+                    )) : <a
+                      className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
+                    >
+                      <p className="mx-2 text-sm text-gray-600 dark:text-white">
+                        No Message available
+                      </p>
+                    </a>
                   }
 
-                </div>
-              </div>
-            </Display>
-
-            <Display
-              show={show}
-              setChoosen={setChoosen}
-              choosen={choosen}
-              setShow={setShow}
-              active='1'
-              type="ri-notification-3-line"
-              display={true}
-              className="p-1 bg-red-500 absolute right-1 top-1  rounded-full"
-            >
-              <div className="absolute right-0 md:mt-4  bottom-0 left-0 md:left-auto  md:bottom-auto z-20  overflow-hidden bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800">
-                <div className="py-2">
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Sara Salah
-                      </span>{" "}
-                      replied on the{" "}
-                      <span className="font-bold text-blue-500" href="#">
-                        Upload Image
-                      </span>{" "}
-                      artical . 2m
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Slick Net
-                      </span>{" "}
-                      start following you . 45m
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform border-b border-gray-100 hover:bg-gray-50 dark:hover:bg-gray-700 dark:border-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Jane Doe
-                      </span>{" "}
-                      Like Your reply on{" "}
-                      <span className="font-bold text-blue-500" href="#">
-                        Test with TDD
-                      </span>{" "}
-                      artical . 1h
-                    </p>
-                  </a>
-                  <a
-                    href="#"
-                    className="flex items-center px-4 py-3 -mx-2 transition-colors duration-200 transform hover:bg-gray-100 dark:hover:bg-gray-700"
-                  >
-                    <p className="mx-2 text-sm text-gray-600 dark:text-white">
-                      <span className="font-bold" href="#">
-                        Abigail Bennett
-                      </span>{" "}
-                      start following you . 3h
-                    </p>
-                  </a>
                 </div>
               </div>
             </Display>
             <div className="flex items-center md:hidden text-[#6B6D72] text-2xl">
               <Link href="/mobilesearch"><i className="ri-search-2-line"></i></Link>
             </div>
-            <div className="relative inline-block">
               <Display type="profile" show={show}
                 setShow={setShow}
                 setChoosen={setChoosen}
                 choosen={choosen}
                 active='2'>
-                <div className="absolute right-0 md:mt-4  bottom-0  md:left-auto  md:bottom-auto z-20 w-[14rem] overflow-hidden py-4 bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800">
+                <div className={`absolute right-0 py-3 w-full md:mt-4 bottom-0 duration-300  left-0 md:left-auto md:bottom-auto z-20  overflow-hidden bg-white rounded-t-lg shadow-xl md:w-80 w-[100%] dark:bg-gray-800`}>
                   <a
                     href="#"
                     className="flex items-center p-3 -mt-2 text-sm text-gray-600 transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
@@ -215,7 +152,7 @@ function Navbar({ show, setShow }) {
                   <hr className="border-gray-200 dark:border-gray-700 " />
 
                   <Link href="/viewprofile">
-                    <a className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
+                    <a className="block px-4 pt-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white">
                       view profile
                     </a>
                   </Link>
@@ -223,7 +160,7 @@ function Navbar({ show, setShow }) {
                   <a
                     onClick={() => signOut({ callbackUrl: `${window.location.origin}/auth/signin` })}
                     href="#"
-                    className="block px-4 py-3 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
+                    className="block px-4 py-2 text-sm text-gray-600 capitalize transition-colors duration-200 transform dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 dark:hover:text-white"
                   >
                     Logout
                   </a>
@@ -232,7 +169,6 @@ function Navbar({ show, setShow }) {
             </div>
           </div>
         </div>
-      </div>
       {
         search && <div className="bg-gray-200 rounded-lg dark:bg-gray-700 duration-300 relative mt-2  py-3 px-6">
           {

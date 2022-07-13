@@ -1,6 +1,5 @@
 import { getSession } from "next-auth/react";
 import React from "react";
-import EditProfile from "../components/userdashboard/home/EditProfile";
 import UserDetails from "../components/userdashboard/home/UserDetails";
 import MainLayout from "../layout/MainLayout";
 import { getUserDetails,  allMessages, } from "../store/apicall/userCalls";
@@ -15,7 +14,6 @@ function Editprofile() {
         <div className="col-span-1">
           <UserDetails />
         </div>
-        {/* <EditProfile /> */}
       </div>
     </MainLayout>
   );

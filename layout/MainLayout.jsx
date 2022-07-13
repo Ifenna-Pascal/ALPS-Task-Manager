@@ -21,7 +21,7 @@ function MainLayout({ children }) {
       <div className="w-full h-full  md:ml-[250px]">
         <Navbar show={navShow} setShow={setNavShow} />
         <div
-          className={`w-12 h-12 md:hidden justify-center shadow-lg flex items-center z-50 fixed ${navShow ? "translate-x-0 inset-x-[45%] bottom-[14rem]" : "-translate-x-[100%]"} bg-gray-500 rounded-full  duration-300 `}
+          className={`w-12 h-12 md:hidden justify-center shadow-lg flex items-center z-40 fixed ${navShow ? "translate-x-0 inset-x-[45%] bottom-[14rem]" : "-translate-x-[100%]"} bg-gray-500 rounded-full  duration-300 `}
           onClick={() => setNavShow(false)}
         >
           <i

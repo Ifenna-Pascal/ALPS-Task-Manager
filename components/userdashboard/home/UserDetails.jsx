@@ -10,11 +10,14 @@ function UserDetails() {
     <div className="w-full h-full pb-12 bg-white dark:bg-transparent   relative ">
       <div className={`w-full h-[20%] bg-blend-darken bg-cover bg-center`} style={{ backgroundImage: `url(${IMAGE})` }}></div>
       <div className="w-[100px]  h-[100px] rounded-full flex item-center absolute top-[12%] left-[calc(50%-50px)]">
-        <img
-          className="object-cover object-center  rounded-full h-full w-full"
-          src= {profile && profile.imageUrl}
-          alt="avatar"
-        /> 
+      {
+          profile && profile.imageUrl ? <img
+            className="object-cover object-center  rounded-full h-full w-full"
+            src={profile && profile.imageUrl}
+            alt="avatar"
+          /> : <span className="w-full h-full flex items-center text-white text-3xl text-center justify-center font-900  bg-purple-500 rounded-full"> {profile?.userName?.charAt(0).toUpperCase() + profile?.userName?.charAt(1).toUpperCase()} </span>
+        }
+
       </div>
       <div className="py-20  max-h-fit  px-4 lg:px-8">
         <div>
